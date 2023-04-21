@@ -6,12 +6,12 @@ let connection;
 
 async function connection_start(){
     try{
-
+        
         connection = await oracledb.getConnection(dbconfig_peti);
         console.log('Sikeres kapcsolódás az adatbázishoz');
         return connection;
 
-    }catch (err) {
+    }catch (err) { 
         console.error('Hiba történt:', err);
       }
       

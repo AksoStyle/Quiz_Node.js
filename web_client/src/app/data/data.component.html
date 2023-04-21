@@ -1,0 +1,198 @@
+<!-- ADMIN TÁBLA ADATAI -->
+<h1>Admin adatok:</h1>
+ <table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Felhasználónév</th>
+      <th>Email</th>
+      <th>Jelszó</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let admin of adminData">
+      <td>{{ admin[0] }}</td>
+      <td>{{ admin[1] }}</td>
+      <td>{{ admin[2] }}</td>
+      <td>{{ admin[3] }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- JÁTÉKOS TÁBLA ADATAI -->
+<h1>Játékos adatok:</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Név</th>
+      <th>Felhasználónév</th>
+      <th>Email</th>
+      <th>Jelszó</th>
+      <th>Születési Dátum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let jatekos of jatekosData">
+      <td>{{ jatekos[0] }}</td>
+      <td>{{ jatekos[1] }}</td>
+      <td>{{ jatekos[2] }}</td>
+      <td>{{ jatekos[3] }}</td>
+      <td>{{ jatekos[4] }}</td>
+      <td>{{ jatekos[5] }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- VERSENY TÁBLA ADATOK -->
+<h1>Verseny adatok:</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Jatekos_ID</th>
+      <th>Név</th>
+      <th>Leírás</th>
+      <th>Nyítási Dátum</th>
+      <th>Engedélyezve</th>
+      <th>Állapot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let verseny of versenyData">
+      <td>{{ verseny[0] }}</td>
+      <td>{{ verseny[1] }}</td>
+      <td>{{ verseny[2] }}</td>
+      <td>{{ verseny[3] }}</td>
+      <td>{{ verseny[4] }}</td>
+      <td>{{ verseny[5] }}</td>
+      <td>{{ verseny[6] }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- FÓRUM TÁBLA ADATOK -->
+<h1>Fórum adatok:</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Név</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let forum of forumData">
+      <td>{{ forum[0] }}</td>
+      <td>{{ forum[1] }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- HOZZÁSZÓLÁS TÁBLA ADATOK -->
+<h1>Hozzászólás adatok:</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Játékos_ID</th>
+      <th>Fórum_ID</th>
+      <th>Szöveg</th>
+      <th>Dátum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let hozzaszolas of hozzaszolasData">
+      <td>{{ hozzaszolas[0] }}</td>
+      <td>{{ hozzaszolas[1] }}</td>
+      <td>{{ hozzaszolas[2] }}</td>
+      <td>{{ hozzaszolas[3] }}</td>
+      <td>{{ hozzaszolas[4] }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- TÉMAKÖR TÁBLA ADATOK -->
+<h1>Témakör adatok:</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fórum_ID</th>
+      <th>Név</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let temakor of temakorData">
+      <td>{{ temakor[0] }}</td>
+      <td>{{ temakor[1] }}</td>
+      <td>{{ temakor[2] }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- JÁTÉKSZOBA TÁBLA ADATOK -->
+<h1>Játékszoba adatok:</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Játékos_ID</th>
+      <th>Témakör_ID</th>
+      <th>Nehézségi szint</th>
+      <th>Időpont</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let jatekszoba of jatekszobaData">
+      <td>{{ jatekszoba[0] }}</td>
+      <td>{{ jatekszoba[1] }}</td>
+      <td>{{ jatekszoba[2] }}</td>
+      <td>{{ jatekszoba[3] }}</td>
+      <td>{{ jatekszoba[4] }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- KÉRDÉS TÁBLA ADATOK -->
+<h1>Kérdés adatok:</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Témakör_ID</th>
+      <th>Szöveg</th>
+      <th>Nehézségi szint</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let kerdes of kerdesData">
+      <td>{{ kerdes[0] }}</td>
+      <td>{{ kerdes[1] }}</td>
+      <td>{{ kerdes[2] }}</td>
+      <td>{{ kerdes[3] }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- VÁLASZ TÁBLA ADATOK -->
+<h1>Válasz adatok:</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Kérdés_ID</th>
+      <th>Szöveg</th>
+      <th>Helyesség</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let valasz of valaszData">
+      <td>{{ valasz[0] }}</td>
+      <td>{{ valasz[1] }}</td>
+      <td>{{ valasz[2] }}</td>
+      <td>{{ valasz[3] }}</td>
+    </tr>
+  </tbody>
+</table>
