@@ -1,5 +1,6 @@
 const oracledb = require('oracledb');
 const dbconfig = require('./db-config.js');
+const dbcondig_peti = require('./db-config-peti.js');
 
 let connection;
 
