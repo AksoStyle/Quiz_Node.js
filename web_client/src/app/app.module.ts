@@ -1,21 +1,42 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AdminpageComponent } from './adminpage/adminpage.component';
 import { DataComponent } from './data/data.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { DataService } from './data.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// Components
+// -- NAVBAR --
+import { NavbarComponent } from './navbar/navbar.component';
+
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AdminpageComponent } from './adminpage/adminpage.component';
+
+// Materials
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+
+@NgModule({
+  imports: [
+    // ...
+    MatSidenavModule
+  ],
+  // ...
+})
+export class NavbarModule { }
+
 
 
 @NgModule({
@@ -26,6 +47,9 @@ import { MatInputModule } from '@angular/material/input';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
+    NavbarComponent,
+    
+
   
   ],
   imports: [
@@ -38,7 +62,16 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     ReactiveFormsModule ,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule,
+    
+    
+
+
   ],
   providers: [
     DataService
