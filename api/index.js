@@ -17,6 +17,8 @@ async function get_data() {
     const admin_data = await queries.getAdminData(connection);
     const jatekos_data = await queries.getJatekosData(connection);
     const verseny_data = await queries.getVersenyData(connection);
+    const delete_verseny_data = await queries.deleteVersenyData(connection);
+
     const forum_data = await queries.getForumData(connection);
     const hozzaszolas_data = await queries.getHozzaszolasData(connection);
     const temakor_data = await queries.getTemakorData(connection);
@@ -28,6 +30,8 @@ async function get_data() {
         admin_data,
         jatekos_data,
         verseny_data,
+        delete_verseny_data,
+        
         forum_data,
         hozzaszolas_data,
         temakor_data,

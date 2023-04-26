@@ -28,7 +28,9 @@ const getJatekosData = (connection) => {
     });
 };
 
-// Minden verseny lekérdezése
+// Minden verseny lekérdezése, frissítése, törlése
+
+// --- LEKÉRDEZÉS
 const getVersenyData = (connection) => {
     return new Promise((resolve, reject) => {
       connection.execute('SELECT * FROM VERSENY', (err, result) => {
@@ -41,6 +43,21 @@ const getVersenyData = (connection) => {
         resolve(jsonData);
       });
     });
+};
+
+// --- TÖRLÉS
+const deleteVersenyData = (connection, versenyId) => {
+  return new Promise((resolve, reject) => {
+    const sql = 'DELETE FROM VERSENY WHERE ID = :versenyId';
+    const binds = [versenyId];
+    connection.execute(sql, binds, (err, result) => {
+      if (err) {
+        console.log('Hiba történt a törlés folyamán.');
+        reject(err);
+      }
+      resolve(result);
+    });
+  });
 };
 
 // Minden Fórum lekérdezése
@@ -137,6 +154,7 @@ module.exports = {
     getAdminData,
     getJatekosData,
     getVersenyData,
+    deleteVersenyData,
     getForumData,
     getHozzaszolasData,
     getTemakorData,

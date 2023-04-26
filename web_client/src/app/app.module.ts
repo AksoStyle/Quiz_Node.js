@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { DataComponent } from './data/data.component';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { DataService } from './data.service';
+import { DataService } from './services/get_data_services/data.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -25,8 +25,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -48,9 +49,9 @@ export class NavbarModule { }
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
-    
 
-  
+
+
   ],
   imports: [
     BrowserModule,
@@ -60,7 +61,7 @@ export class NavbarModule { }
     MatFormFieldModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule ,
+    ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
     MatToolbarModule,
@@ -68,8 +69,10 @@ export class NavbarModule { }
     MatSidenavModule,
     MatListModule,
     MatCardModule,
-    
-    
+    MatSnackBarModule,
+
+
+
 
 
   ],

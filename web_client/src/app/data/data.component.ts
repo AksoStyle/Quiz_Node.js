@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service';
+import { DataService } from '../services/get_data_services/data.service';
+import { DeleteDataService } from '../services/delete_data_services/delete-data.service';
+import { SnackbarService } from '../services/snackbar_service/snackbar.service';
 
 @Component({
   selector: 'app-data',
@@ -17,7 +19,11 @@ export class DataComponent implements OnInit {
   kerdesData: Array<any> = [];
   valaszData: Array<any> = [];
 
-  constructor(private dataService: DataService) { }
+  constructor(
+      private dataService: DataService,
+      private deleteDateServices: DeleteDataService,
+      private snackbar : SnackbarService,
+      ) { }
 
   getAdminData = () => {
     this.dataService.getData().subscribe(data => {
@@ -37,6 +43,15 @@ export class DataComponent implements OnInit {
       
       });
   }
+
+  deleteVerseny(VersenyID: number){
+    this.deleteDateServices.deleteVersenyData(VersenyID).subscribe(() => {
+      this.snackbar.show(['Sikeres verseny törlés ID {'+ VersenyID , '} alapján'], 'success-snackbar');
+    }, (err) => {
+      this.snackbar.show(['Sikertelen verseny törlés, hiba: ', err], 'error-snackbar');
+    });
+  }
+
 
   getForumData = () => {
     this.dataService.getData().subscribe(data => {
