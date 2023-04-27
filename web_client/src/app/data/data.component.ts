@@ -44,13 +44,20 @@ export class DataComponent implements OnInit {
       });
   }
 
-  deleteVerseny(VersenyID: number){
-    this.deleteDateServices.deleteVersenyData(VersenyID).subscribe(() => {
-      this.snackbar.show(['Sikeres verseny törlés ID {'+ VersenyID , '} alapján'], 'success-snackbar');
-    }, (err) => {
-      this.snackbar.show(['Sikertelen verseny törlés, hiba: ', err], 'error-snackbar');
-    });
+  deleteVerseny(VersenyID: number) {
+    this.deleteDateServices.deleteVersenyData(VersenyID).subscribe(
+      () => {
+        this.snackbar.show([`Sikeres verseny törlés ID=${VersenyID} alapján`], 'success-snackbar');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }, 
+      (err) => {
+        this.snackbar.show([`Sikertelen verseny törlés, ID=${VersenyID}, hiba: ${err}`], 'error-snackbar');
+      }
+    );
   }
+  
 
 
   getForumData = () => {

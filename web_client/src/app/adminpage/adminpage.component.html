@@ -1,1 +1,42 @@
-<p>adminpage works!</p>
+<mat-card>
+    <mat-card-title>Új verseny felvétele</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="versenyUpForm" (ngSubmit)="VersenyUP()">
+        <mat-form-field appearance="fill">
+          <mat-label>Játékos ID</mat-label>
+          <input matInput type="number" name="jatekosId" formControlName="jatekosid"  min="1">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Név</mat-label>
+          <input matInput type="text" name="nev" formControlName="nev">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Leírás</mat-label>
+          <input matInput type="text" name="leiras" formControlName="leiras">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label for="startofrace">Start of race: </mat-label>
+            <input matInput [matDatepicker]="birthdatePicker" placeholder="Choose a date"
+                formControlName="startofrace">
+            <mat-datepicker-toggle matSuffix [for]="birthdatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #birthdatePicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Engedélyezve</mat-label>
+          <mat-select name="engedelyezve" formControlName="engedelyezve">
+            <mat-option value="igen">Igen</mat-option>
+            <mat-option value="nem">Nem</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Állapot</mat-label>
+          <mat-select name="allapot" formControlName="allapot">
+            <mat-option value="aktív">Aktív</mat-option>
+            <mat-option value="inaktív">Inaktív</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button type="submit">Verseny felvitel</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

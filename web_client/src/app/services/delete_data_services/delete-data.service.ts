@@ -10,7 +10,9 @@ export class DeleteDataService {
 
   constructor(private http: HttpClient) { }
 
-  deleteVersenyData(VersenyID: number) : Observable<any>{
-    return this.http.delete(this.apiUrl);
+  deleteVersenyData(VersenyID: number): Observable<any> {
+    const url = `${this.apiUrl}/verseny/${VersenyID}`;
+    return this.http.delete(url);
   }
+
 }
