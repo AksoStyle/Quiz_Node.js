@@ -44,58 +44,7 @@ async function get_data() {
   };
 }
 
-// ---- VERSENY INSERT START ----
-
-app.post("/verseny", async (req, res) => {
-  const { jatekosId, nev, leiras, nyitasiDatum, engedelyezve, allapot } = req.body;
-  try {
-    console.log('index.js; req.body: ',req.body);
-    connection = await databaseConn.connection_start();
-    const result = await queries.insertNewVerseny(
-      connection,
-      jatekosId,
-      nev,
-      leiras,
-      nyitasiDatum,
-      engedelyezve,
-      allapot
-    );
-    res.json({ success: true, result: result.rowsAffected });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Hiba történt az adatok beszúrása során" });
-  } finally {
-    if (connection) {
-      await databaseConn.connection_close(connection);
-    }
-  }
-});
-
-// ---- VERSENY INSERT END ----
-
-// ---- VERSENY DELETE START ----
-async function deleteVerseny(versenyId) {
-  try {
-    const connection = await databaseConn.connection_start();
-    const result = await queries.deleteVersenyData(connection, versenyId);
-    return result;
-  } catch (err) {
-    console.error(err);
-    throw new Error("Hiba történt a törlés során");
-  }
-}
-
-app.delete("/verseny/:id", async (req, res) => {
-  const versenyId = req.params.id;
-  try {
-    const result = await deleteVerseny(versenyId);
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({ error: "Hiba történt a törlés során" });
-  }
-});
-
-// ---- DELETE VERSENY END ----
+// ---- INSERT START ----
 
 // ---- JATEKOS INSERT START ----
 
@@ -115,7 +64,9 @@ app.post("/register", async (req, res) => {
     res.json({ success: true, result: result.rowsAffected });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Hiba történt a regisztráció során." });
+    res
+      .status(500)
+      .json({ error: "Hiba történt a regisztráció során. Hiba: ", err });
   } finally {
     if (connection) {
       await databaseConn.connection_close(connection);
@@ -124,6 +75,316 @@ app.post("/register", async (req, res) => {
 });
 
 // ---- JATEKOS INSERT END ----
+
+// ---- VERSENY INSERT START ----
+
+app.post("/verseny", async (req, res) => {
+  const { jatekosId, nev, leiras, nyitasiDatum, engedelyezve, allapot } =
+    req.body;
+  try {
+    connection = await databaseConn.connection_start();
+    const result = await queries.insertNewVerseny(
+      connection,
+      jatekosId,
+      nev,
+      leiras,
+      nyitasiDatum,
+      engedelyezve,
+      allapot
+    );
+    res.json({ success: true, result: result.rowsAffected });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: "Hiba történt az adatok beszúrása során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// ---- VERSENY INSERT END ----
+
+// ---- FORUM INSERT START ----
+
+app.post("/forum", async (req, res) => {
+  const { nev } = req.body;
+  try {
+    connection = await databaseConn.connection_start();
+    const result = await queries.insertNewForum(connection, nev);
+    res.json({ success: true, result: result.rowsAffected });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: "Hiba történt az adatok beszúrása során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// ---- FORUM INSERT END ----
+
+// ---- HOZZASZOLAS INSERT START ----
+
+app.post("/hozzaszolas", async (req, res) => {
+  const { jatekos_id, forum_id, szoveg, datum } = req.body;
+  try {
+    connection = await databaseConn.connection_start();
+    const result = await queries.insertNewHozzaszolas(
+      connection,
+      jatekos_id,
+      forum_id,
+      szoveg,
+      datum
+    );
+    res.json({ success: true, result: result.rowsAffected });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: "Hiba történt az adatok beszúrása során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// ---- HOZZASZOLAS INSERT END ----
+
+// ---- TEMAKOR INSERT START ----
+
+app.post("/temakor", async (req, res) => {
+  const { forum_id, nev } = req.body;
+  try {
+    connection = await databaseConn.connection_start();
+    const result = await queries.insertNewTemakor(connection, forum_id, nev);
+    res.json({ success: true, result: result.rowsAffected });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: "Hiba történt az adatok beszúrása során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// ---- TEMAKOR INSERT END ----
+
+// ---- JATEKSZOBA INSERT START ----
+
+app.post("/jatekszoba", async (req, res) => {
+  const { jatekos_id, temakor_id, nehezsegi_szint, idopont } = req.body;
+  try {
+    connection = await databaseConn.connection_start();
+    const result = await queries.insertNewJatekszoba(
+      connection,
+      jatekos_id,
+      temakor_id,
+      nehezsegi_szint,
+      idopont
+    );
+    res.json({ success: true, result: result.rowsAffected });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: "Hiba történt az adatok beszúrása során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// ---- JATEKSZOBA INSERT END ----
+
+// ---- KERDES INSERT START ----
+
+app.post("/kerdes", async (req, res) => {
+  const { temakor_id, szoveg, nehezsegi_szint} = req.body;
+  try {
+    connection = await databaseConn.connection_start();
+    const result = await queries.insertNewKerdes(
+      connection,
+      temakor_id,
+      szoveg,
+      nehezsegi_szint,
+    );
+    res.json({ success: true, result: result.rowsAffected });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: "Hiba történt az adatok beszúrása során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// ---- KERDES INSERT END ----
+
+// ---- VALASZ INSERT START ----
+
+app.post("/valasz", async (req, res) => {
+  const { kerdes_id, szoveg, helyesseg} = req.body;
+  try {
+    connection = await databaseConn.connection_start();
+    const result = await queries.insertNewValasz(
+      connection,
+      kerdes_id,
+      szoveg,
+      helyesseg,
+    );
+    res.json({ success: true, result: result.rowsAffected });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: "Hiba történt az adatok beszúrása során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// ---- VALASZ INSERT END ----
+
+// ---- DELETE DATAS START ----
+// VERSENY
+app.delete("/verseny/:id", async (req, res) => {
+  const versenyId = req.params.id;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.deleteVersenyData(connection, versenyId);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Hiba történt a törlés során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+//FORUM
+
+app.delete("/forum/:id", async (req, res) => {
+  const forumId = req.params.id;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.deleteForumData(connection, forumId);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Hiba történt a törlés során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// HOZZASZOLAS
+app.delete("/hozzaszolas/:id", async (req, res) => {
+  const hozzaszolasId = req.params.id;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.deleteHozzaszolasData(
+      connection,
+      hozzaszolasId
+    );
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Hiba történt a törlés során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// TEMAKOR
+app.delete("/temakor/:id", async (req, res) => {
+  const temakorId = req.params.id;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.deleteTemakorData(connection, temakorId);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Hiba történt a törlés során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// JATEKSZOBA
+
+app.delete("/jatekszoba/:id", async (req, res) => {
+  const jatekosszobaId = req.params.id;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.deleteJatekszobaData(
+      connection,
+      jatekosszobaId
+    );
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Hiba történt a törlés során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// KERDES
+
+app.delete("/kerdes/:id", async (req, res) => {
+  const kerdesId = req.params.id;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.deleteKerdesData(connection, kerdesId);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Hiba történt a törlés során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// VALASZ
+
+app.delete("/valasz/:id", async (req, res) => {
+  const valaszId = req.params.id;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.deleteValaszData(connection, valaszId);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Hiba történt a törlés során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// ---- DELETE VERSENY END ----
 
 app.get("/", async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
