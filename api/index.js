@@ -161,6 +161,7 @@ app.post("/hozzaszolas", async (req, res) => {
 
 app.post("/temakor", async (req, res) => {
   const { forum_id, nev } = req.body;
+  console.log('index.js -> ', req.body);
   try {
     connection = await databaseConn.connection_start();
     const result = await queries.insertNewTemakor(connection, forum_id, nev);
@@ -183,6 +184,7 @@ app.post("/temakor", async (req, res) => {
 
 app.post("/jatekszoba", async (req, res) => {
   const { jatekos_id, temakor_id, nehezsegi_szint, idopont } = req.body;
+  console.log('index.js -> jatekszoba insert', req.body);
   try {
     connection = await databaseConn.connection_start();
     const result = await queries.insertNewJatekszoba(

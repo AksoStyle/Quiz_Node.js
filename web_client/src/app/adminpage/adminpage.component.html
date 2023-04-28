@@ -1,3 +1,4 @@
+<div class="container">
 <mat-card>
     <mat-card-title>Új verseny felvétele</mat-card-title>
     <mat-card-content>
@@ -40,3 +41,133 @@
     </mat-card-content>
   </mat-card>
   
+  <mat-card>
+    <mat-card-title>Új Fórum felvétele</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="forumUpForm" (ngSubmit)="ForumUP()">
+        <mat-form-field appearance="fill">
+          <mat-label>Név</mat-label>
+          <input matInput type="text" name="nev" formControlName="nev">
+        </mat-form-field>
+        <button mat-raised-button type="submit">Fórum felvitel</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Új hozzászolás felvétele</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="hozzaszolasUpForm" (ngSubmit)="hozzaszolasUP()">
+        <mat-form-field appearance="fill">
+          <mat-label>Játékos ID</mat-label>
+          <input matInput type="number" name="jatekosId" formControlName="jatekosid"  min="1">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Fórum ID</mat-label>
+          <input matInput type="number" name="forumId" formControlName="forumid"  min="1">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Szöveg</mat-label>
+          <input matInput type="text" name="szoveg" formControlName="szoveg">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label for="datum">Datum: </mat-label>
+          <input matInput [matDatepicker]="hozzaszolasdatePicker" placeholder="Choose a date"
+              formControlName="datum">
+          <mat-datepicker-toggle matSuffix [for]="hozzaszolasdatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #hozzaszolasdatePicker></mat-datepicker>
+      </mat-form-field>
+        <button mat-raised-button type="submit">Hozzászólás felvitel</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Új témakör felvétele</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="temakorUpForm" (ngSubmit)="TemakorUP()">
+        <mat-form-field appearance="fill">
+          <mat-label>Fórum ID</mat-label>
+          <input matInput type="number" name="forumId" formControlName="forumid"  min="1">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Név</mat-label>
+          <input matInput type="text" name="nev" formControlName="nev">
+        </mat-form-field>
+        <button mat-raised-button type="submit">Témakör felvitel</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Új Jatekszoba felvétele</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="jatekSzobaUpForm" (ngSubmit)="JatekSzobaUP()">
+        <mat-form-field appearance="fill">
+          <mat-label>Játékos ID</mat-label>
+          <input matInput type="number" name="jatekosId" formControlName="jatekosid"  min="1">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Témakör ID</mat-label>
+          <input matInput type="number" name="temakorId" formControlName="temakorid"  min="1">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Nehezségiszint</mat-label>
+          <input matInput type="text" name="nehezsegiSzint" formControlName="nehezsegiSzint">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label for="idopont">Időpont: </mat-label>
+          <input matInput [matDatepicker]="jatekSzobadatePicker" placeholder="Choose a date"
+              formControlName="idopont">
+          <mat-datepicker-toggle matSuffix [for]="jatekSzobadatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #jatekSzobadatePicker></mat-datepicker>
+      </mat-form-field>
+        <button mat-raised-button type="submit">Jatekszoba felvitel</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Új Kérdés felvétele</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="kerdesUpForm" (ngSubmit)="KerdesUP()">
+        <mat-form-field appearance="fill">
+          <mat-label>Témakör ID</mat-label>
+          <input matInput type="number" name="temakorId" formControlName="temakorid"  min="1">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Szöveg</mat-label>
+          <input matInput type="text" name="szoveg" formControlName="szoveg">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Nehezségiszint</mat-label>
+          <input matInput type="text" name="nehezsegiSzint" formControlName="nehezsegiSzint">
+        </mat-form-field>
+        <button mat-raised-button type="submit">Kérdés felvitel</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Új Válasz felvétele</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="valaszUpForm" (ngSubmit)="ValaszUP()">
+        <mat-form-field appearance="fill">
+          <mat-label>Kérdés ID</mat-label>
+          <input matInput type="number" name="kerdesId" formControlName="kerdesid"  min="1">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Szöveg</mat-label>
+          <input matInput type="text" name="szoveg" formControlName="szoveg">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Helyesség</mat-label>
+          <input matInput type="text" name="helyesseg" formControlName="helyesseg">
+        </mat-form-field>
+        <button mat-raised-button type="submit">Válasz felvitel</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  
+  
+</div>
