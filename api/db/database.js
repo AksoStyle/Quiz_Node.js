@@ -9,6 +9,7 @@ async function connection_start(){
         
         connection = await oracledb.getConnection(dbconfig_peti);
         console.log('Sikeres kapcsolódás az adatbázishoz');
+
         return connection;
 
     }catch (err) { 
@@ -17,8 +18,17 @@ async function connection_start(){
       
 }
 
+async function connection_close() {
+    try {
+        await connection.close();
+        console.log('Kapcsolat lezárva');
+    } catch (err) {
+        console.error('Hiba történt a kapcsolat lezárása során:', err);
+    }
+}
 
 module.exports = {
-    connection_start
+    connection_start,
+    connection_close
     
 }
