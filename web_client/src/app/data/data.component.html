@@ -90,6 +90,11 @@
     <tr *ngFor="let forum of forumData">
       <td>{{ forum[0] }}</td>
       <td>{{ forum[1] }}</td>
+      <td>
+        <button mat-icon-button color="warn" (click)="deleteForum(forum[0])">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -113,6 +118,11 @@
       <td>{{ hozzaszolas[2] }}</td>
       <td>{{ hozzaszolas[3] }}</td>
       <td>{{ hozzaszolas[4] }}</td>
+      <td>
+        <button mat-icon-button color="warn" (click)="deleteHozzaszolas(hozzaszolas[0])">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -132,6 +142,11 @@
       <td>{{ temakor[0] }}</td>
       <td>{{ temakor[1] }}</td>
       <td>{{ temakor[2] }}</td>
+      <td>
+        <button mat-icon-button color="warn" (click)="deleteTemakor(temakor[0])">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -155,6 +170,11 @@
       <td>{{ jatekszoba[2] }}</td>
       <td>{{ jatekszoba[3] }}</td>
       <td>{{ jatekszoba[4] }}</td>
+      <td>
+        <button mat-icon-button color="warn" (click)="deleteJatekszoba(jatekszoba[0])">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -177,6 +197,11 @@
       <td>{{ kerdes[1] }}</td>
       <td>{{ kerdes[2] }}</td>
       <td>{{ kerdes[3] }}</td>
+      <td>
+        <button mat-icon-button color="warn" (click)="deleteKerdes(kerdes[0])">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
@@ -199,6 +224,11 @@
       <td>{{ valasz[1] }}</td>
       <td>{{ valasz[2] }}</td>
       <td>{{ valasz[3] }}</td>
+      <td>
+        <button mat-icon-button color="warn" (click)="deleteValasz(valasz[0])">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

@@ -384,7 +384,7 @@ app.delete("/valasz/:id", async (req, res) => {
   }
 });
 
-// ---- DELETE VERSENY END ----
+// ---- DELETE END ----
 
 app.get("/", async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
