@@ -577,10 +577,9 @@ const getValaszData = (connection) => {
 
 const insertNewValasz = (
   connection,
-  jatekos_id,
-  forum_id,
+  kerdes_id,
   szoveg,
-  datum,
+  helyesseg,
 ) => {
   return new Promise((resolve, reject) => {
     const valaszId = Math.floor(Math.random() * 50) + 1;
@@ -588,7 +587,7 @@ const insertNewValasz = (
   
     const binds = {
       valasz_id: valaszId,
-      kerdes_id: jatekos_id,
+      kerdes_id: kerdes_id,
       szoveg: szoveg,
       helyesseg: helyesseg,
       

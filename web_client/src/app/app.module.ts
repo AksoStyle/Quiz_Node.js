@@ -29,8 +29,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSelectModule } from '@angular/material/select';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   imports: [
@@ -74,8 +74,8 @@ export class NavbarModule { }
     MatCardModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatMomentDateModule,
     MatSelectModule,
+    MatMomentDateModule
 
 
 
