@@ -161,7 +161,7 @@ app.post("/hozzaszolas", async (req, res) => {
 
 app.post("/temakor", async (req, res) => {
   const { forum_id, nev } = req.body;
-  console.log('index.js -> ', req.body);
+  console.log("index.js -> ", req.body);
   try {
     connection = await databaseConn.connection_start();
     const result = await queries.insertNewTemakor(connection, forum_id, nev);
@@ -184,7 +184,7 @@ app.post("/temakor", async (req, res) => {
 
 app.post("/jatekszoba", async (req, res) => {
   const { jatekos_id, temakor_id, nehezsegi_szint, idopont } = req.body;
-  console.log('index.js -> jatekszoba insert', req.body);
+  console.log("index.js -> jatekszoba insert", req.body);
   try {
     connection = await databaseConn.connection_start();
     const result = await queries.insertNewJatekszoba(
@@ -212,14 +212,14 @@ app.post("/jatekszoba", async (req, res) => {
 // ---- KERDES INSERT START ----
 
 app.post("/kerdes", async (req, res) => {
-  const { temakor_id, szoveg, nehezsegi_szint} = req.body;
+  const { temakor_id, szoveg, nehezsegi_szint } = req.body;
   try {
     connection = await databaseConn.connection_start();
     const result = await queries.insertNewKerdes(
       connection,
       temakor_id,
       szoveg,
-      nehezsegi_szint,
+      nehezsegi_szint
     );
     res.json({ success: true, result: result.rowsAffected });
   } catch (err) {
@@ -239,14 +239,14 @@ app.post("/kerdes", async (req, res) => {
 // ---- VALASZ INSERT START ----
 
 app.post("/valasz", async (req, res) => {
-  const { kerdes_id, szoveg, helyesseg} = req.body;
+  const { kerdes_id, szoveg, helyesseg } = req.body;
   try {
     connection = await databaseConn.connection_start();
     const result = await queries.insertNewValasz(
       connection,
       kerdes_id,
       szoveg,
-      helyesseg,
+      helyesseg
     );
     res.json({ success: true, result: result.rowsAffected });
   } catch (err) {
@@ -387,6 +387,173 @@ app.delete("/valasz/:id", async (req, res) => {
 });
 
 // ---- DELETE END ----
+
+// ---- UPDATE START ----
+
+//VERSENY
+app.put("/verseny/:id", async (req, res) => {
+  const versenyId = req.params.id;
+  const { jatekos_id, nev, leiras, nyitasiDatum, engedelyezve, allapot } = req.body;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.updateVerseny(connection, versenyId, jatekos_id, nev, leiras, nyitasiDatum, engedelyezve, allapot);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Hiba történt az update során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+
+//FORUM
+app.put("/forum/:id", async (req, res) => {
+  const forumId = req.params.id;
+  const { nev } = req.body;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.updateForum(connection, forumId, nev);
+    res.json(result);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Hiba történt az update során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+//HOZZASZOLAS
+app.put("/hozzaszolas/:id", async (req, res) => {
+  const hozzaszolasId = req.params.id;
+  const { jatekos_id, forum_id, szoveg, datum } = req.body;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.updateHozzaszolas(
+      connection,
+      hozzaszolasId,
+      jatekos_id,
+      forum_id,
+      szoveg,
+      datum
+    );
+    res.json(result);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Hiba történt az update során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+//TEMAKOR
+app.put("/temakor/:id", async (req, res) => {
+  const temakorId = req.params.id;
+  const { forum_id, nev } = req.body;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.updateTemakor(
+      connection,
+      temakorId,
+      forum_id,
+      nev
+    );
+    res.json(result);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Hiba történt az update során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+//JATEKSZOBA
+app.put("/jatekszoba/:id", async (req, res) => {
+  const jatekszobaId = req.params.id;
+  const { jatekos_id, temakor_id, nehezsegi_szint, idopont } = req.body;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.updateJatekszoba(
+      connection,
+      jatekszobaId,
+      jatekos_id,
+      temakor_id,
+      nehezsegi_szint,
+      idopont
+    );
+    res.json(result);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Hiba történt az update során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+//KERDES
+app.put("/kerdes/:id", async (req, res) => {
+  const kerdesId = req.params.id;
+  const { szoveg, nehezsegi_szint } = req.body;
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.updateKerdes(
+      connection,
+      kerdesId,
+      szoveg,
+      nehezsegi_szint
+    );
+    res.json(result);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Hiba történt az update során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// VALASZ
+app.put("/valasz/:id", async (req, res) => {
+  const valaszId = req.params.id;
+  const { kerdesId, szoveg, helyesseg } = req.body;
+
+  try {
+    const connection = await databaseConn.connection_start();
+    const result = await queries.updateValasz(
+      connection,
+      valaszId,
+      kerdesId,
+      szoveg,
+      helyesseg
+    );
+    res.json(result);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Hiba történt az update során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+// ---- UPDATE END ----
 
 app.get("/", async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");

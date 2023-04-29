@@ -156,6 +156,43 @@ const deleteVersenyData = (connection, versenyId) => {
   });
 };
 
+// ---- UPDATE
+const updateVerseny = (connection, verseny_id, jatekos_id, nev, leiras, nyitasiDatum, engedelyezve, allapot) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE FORUM SET NEV = :nev, LEIRAS = :leiras, nyitasiDatuma = :nyitasiDatuma, engedelyezve = :engedelyezve, allapot = :allapotWHERE verseny_id = :verseny_id";
+    const binds = {
+      verseny_id: verseny_id,
+      jatekos_id: jatekos_id,
+      nev: nev,
+      leiras: leiras,
+      nyitasiDatuma: nyitasiDatum,
+      engedelyezve: engedelyezve,
+      allapot: allapot,
+    };
+
+    connection.execute(
+      sql,
+      binds,
+      { autoCommit: true },
+      (err, result) => {
+        if (err) {
+          console.log("Hiba történt az update folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+          reject(err);
+        } else {
+          connection.commit((err) => {
+            if (err) {
+              console.log("Hiba történt a commit folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        }
+      }
+    );
+  });
+};
+
 // Minden Fórum lekérdezése, törlése, insertálása
 const getForumData = (connection) => {
   return new Promise((resolve, reject) => {
@@ -222,6 +259,39 @@ const deleteForumData = (connection, forumId) => {
         });
       }
     });
+  });
+};
+
+// ---- UPDATE
+
+const updateForum = (connection, forum_id, nev) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE FORUM SET NEV = :nev WHERE forum_id = :forum_id";
+    const binds = {
+      forum_id: forum_id,
+      nev: nev
+    };
+
+    connection.execute(
+      sql,
+      binds,
+      { autoCommit: true },
+      (err, result) => {
+        if (err) {
+          console.log("Hiba történt az update folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+          reject(err);
+        } else {
+          connection.commit((err) => {
+            if (err) {
+              console.log("Hiba történt a commit folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        }
+      }
+    );
   });
 };
 
@@ -313,6 +383,42 @@ const deleteHozzaszolasData = (connection, hozzaszolasId) => {
   });
 };
 
+
+// ---- UPDATE
+const updateHozzaszolas = (connection, hozzaszolas_id, jatekos_id, forum_id, szoveg, datum) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE HOZZASZOLAS SET SZOVEG = :szoveg, datum = :datum WHERE hozzaszolas_id = :hozzaszolas_id";
+    const binds = {
+      hozzaszolas_id: hozzaszolas_id,
+      jatekos_id: jatekos_id,
+      forum_id: forum_id,
+      szoveg: szoveg,
+      datum: datum,
+    };
+
+    connection.execute(
+      sql,
+      binds,
+      { autoCommit: true },
+      (err, result) => {
+        if (err) {
+          console.log("Hiba történt az update folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+          reject(err);
+        } else {
+          connection.commit((err) => {
+            if (err) {
+              console.log("Hiba történt a commit folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        }
+      }
+    );
+  });
+};
+
 // Minden témakör lekérdezése, törlése, insertálása
 
 // ---- LEKÉRDEZÉS
@@ -388,6 +494,39 @@ const deleteTemakorData = (connection, temakor_id) => {
   });
 };
 
+// ---- UPDATE
+const updateTemakor = (connection, temakor_id, forum_id, nev) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE TEMAKOR SET nev = :nev WHERE TEMAKOR_ID = :temakor_id";
+    const binds = {
+      temakor_id: temakor_id,
+      forum_id: forum_id,
+      nev: nev,
+    };
+
+    connection.execute(
+      sql,
+      binds,
+      { autoCommit: true },
+      (err, result) => {
+        if (err) {
+          console.log("Hiba történt az update folyamán. Hiba: ", err);
+          reject(err);
+        } else {
+          connection.commit((err) => {
+            if (err) {
+              console.log("Hiba történt a commit folyamán. Hiba: ", err);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        }
+      }
+    );
+  });
+};
+
 
 
 // Minden játék szoba lekérdezése, törlése, insertálása
@@ -458,6 +597,41 @@ const deleteJatekszobaData = (connection, jatekszobaId) => {
       (err, result) => {
         if (err) {
           console.log("Hiba történt a törlés folyamán. Hiba: ", err);
+          reject(err);
+        } else {
+          connection.commit((err) => {
+            if (err) {
+              console.log("Hiba történt a commit folyamán. Hiba: ", err);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        }
+      }
+    );
+  });
+};
+
+// ---- UPDATE
+const updateJatekszoba = (connection, jatekosszoba_id, jatekos_id, temakor_id, nehezsegi_szint, idopont) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE JATEKSZOBA SET NEHEZSEGI_SZINT = :nehezsegi_szint, idopont = :idopont WHERE JATEKOSSZOBA_ID = :jatekosszoba_id";
+    const binds = {
+      jatekosszoba_id: jatekosszoba_id,
+      jatekos_id: jatekos_id,
+      temakor_id: temakor_id,
+      nehezsegi_szint: nehezsegi_szint,
+      idopont: idopont,
+    };
+
+    connection.execute(
+      sql,
+      binds,
+      { autoCommit: true },
+      (err, result) => {
+        if (err) {
+          console.log("Hiba történt az update folyamán. Hiba: ", err);
           reject(err);
         } else {
           connection.commit((err) => {
@@ -556,6 +730,40 @@ const deleteKerdesData = (connection, kerdesId) => {
   });
 };
 
+// ---- UPDATE
+const updateKerdes = (connection, kerdesId, szoveg, nehezsegi_szint) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE KERDES SET SZOVEG = :szoveg, NEHEZSEGI_SZINT = :nehezsegi_szint WHERE KERDES_ID = :kerdes_id";
+    const binds = {
+      kerdes_id: kerdesId,
+      szoveg: szoveg,
+      nehezsegi_szint: nehezsegi_szint,
+    };
+
+    connection.execute(
+      sql,
+      binds,
+      { autoCommit: true },
+      (err, result) => {
+        if (err) {
+          console.log("Hiba történt az update folyamán. Hiba: ", err);
+          reject(err);
+        } else {
+          connection.commit((err) => {
+            if (err) {
+              console.log("Hiba történt a commit folyamán. Hiba: ", err);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        }
+      }
+    );
+  });
+};
+
+
 // Minden válasz lekérdezése, törlése, insertálása
 // ---- LEKÉRDEZÉS
 
@@ -641,6 +849,40 @@ const deleteValaszData = (connection, valaszId) => {
   });
 };
 
+// ---- UPDATE
+const updateValasz = (connection, valaszId, kerdesId, szoveg, helyesseg) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE VALASZ SET SZOVEG = :szoveg, helyesseg = :helyesseg WHERE VALASZ_ID = :valasz_id";
+    const binds = {
+      valasz_id: valaszId,
+      kerdes_id: kerdesId,
+      szoveg: szoveg,
+      helyesseg: helyesseg,
+    };
+
+    connection.execute(
+      sql,
+      binds,
+      { autoCommit: true },
+      (err, result) => {
+        if (err) {
+          console.log("Hiba történt az update folyamán. Hiba: ", err);
+          reject(err);
+        } else {
+          connection.commit((err) => {
+            if (err) {
+              console.log("Hiba történt a commit folyamán. Hiba: ", err);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        }
+      }
+    );
+  });
+};
+
 module.exports = {
   getAdminData,
   //Jatekos
@@ -650,28 +892,35 @@ module.exports = {
   getVersenyData,
   insertNewVerseny,
   deleteVersenyData,
+  updateVerseny,
   //Forum stb
   getForumData,
   insertNewForum,
   deleteForumData,
+  updateForum,
   //Hozzaszolas
   getHozzaszolasData,
   insertNewHozzaszolas,
   deleteHozzaszolasData,
+  updateHozzaszolas,
   //temakor
   getTemakorData,
   insertNewTemakor,
   deleteTemakorData,
+  updateTemakor,
   //jatekszoba
   getJatekszobaData,
   insertNewJatekszoba,
   deleteJatekszobaData,
+  updateJatekszoba,
   //kerdes
   getKerdesData,
   insertNewKerdes,
   deleteKerdesData,
+  updateKerdes,
   //valasz
   getValaszData,
   insertNewValasz,
-  deleteValaszData
+  deleteValaszData,
+  updateValasz,
 };
