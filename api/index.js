@@ -390,6 +390,24 @@ app.delete("/valasz/:id", async (req, res) => {
 
 // ---- UPDATE START ----
 
+//ADMIN
+app.put("/admin/:admin_id", async (req, res) => {
+  const adminId = req.params.admin_id;
+  const { felhasznalonev, email, jelszo } = req.body;
+  console.log("index.js req.body: ", req.body);
+  try {
+     connection = await databaseConn.connection_start();
+    const result = await queries.updateAdmin(connection, adminId, felhasznalonev, email, jelszo);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: "Hiba történt az update során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
 //VERSENY
 app.put("/verseny/:id", async (req, res) => {
   const versenyId = req.params.id;

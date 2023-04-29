@@ -1,20 +1,42 @@
 <!-- ADMIN TÁBLA ADATAI -->
-<h1>Admin adatok:</h1>
- <table>
+<table>
   <thead>
     <tr>
       <th>ID</th>
       <th>Felhasználónév</th>
       <th>Email</th>
       <th>Jelszó</th>
+      <th>update</th>
     </tr>
   </thead>
-  <tbody>
-    <tr *ngFor="let admin of adminData">
+  <tbody *ngFor="let admin of adminData">
+    <tr >
       <td>{{ admin[0] }}</td>
       <td>{{ admin[1] }}</td>
       <td>{{ admin[2] }}</td>
       <td>{{ admin[3] }}</td>
+      <td></td>
+    </tr>
+    <tr >
+      <td>{{ admin[0] }}</td>
+      <td>
+        <mat-form-field>
+          <input matInput [(ngModel)]="admin.felhasznalonev" placeholder="{{ admin[1] }}">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [(ngModel)]="admin.email" type="email" placeholder="{{ admin[2] }}">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput [(ngModel)]="admin.jelszo" type="password" placeholder="{{ admin[3] }}">
+        </mat-form-field>
+      </td>
+      <td>
+        <button mat-button (click)="updateAdmin(admin)">Update</button>
+      </td>
     </tr>
   </tbody>
 </table>

@@ -13,6 +13,41 @@ const getAdminData = (connection) => {
   });
 };
 
+// UPDATE ADMIN
+const updateAdmin = (connection, admin_id, felhasznalonev, email, jelszo) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE ADMIN SET felhasznalonev = :felhasznalonev, email = :email, jelszo = :jelszo WHERE admin_id = :admin_id";
+    const binds = {
+      admin_id: admin_id,
+      felhasznalonev: felhasznalonev,
+      email: email,
+      jelszo: jelszo,
+    };
+
+    connection.execute(
+      sql,
+      binds,
+      { autoCommit: true },
+      (err, result) => {
+        if (err) {
+          console.log("Hiba történt az update folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+          reject(err);
+        } else {
+          connection.commit((err) => {
+            if (err) {
+              console.log("Hiba történt a commit folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        }
+      }
+    );
+  });
+};
+
+
 // Minden játékos lekérdezése, létrehozása, frissítése
 
 // --- LEKÉRDEZÉS ----
@@ -159,7 +194,7 @@ const deleteVersenyData = (connection, versenyId) => {
 // ---- UPDATE
 const updateVerseny = (connection, verseny_id, jatekos_id, nev, leiras, nyitasiDatum, engedelyezve, allapot) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE FORUM SET NEV = :nev, LEIRAS = :leiras, nyitasiDatuma = :nyitasiDatuma, engedelyezve = :engedelyezve, allapot = :allapotWHERE verseny_id = :verseny_id";
+    const sql = "UPDATE FORUM SET NEV = :nev, LEIRAS = :leiras, nyitasiDatuma = :nyitasiDatuma, engedelyezve = :engedelyezve, allapot = :allapot WHERE verseny_id = :verseny_id";
     const binds = {
       verseny_id: verseny_id,
       jatekos_id: jatekos_id,
@@ -885,6 +920,7 @@ const updateValasz = (connection, valaszId, kerdesId, szoveg, helyesseg) => {
 
 module.exports = {
   getAdminData,
+  updateAdmin,
   //Jatekos
   getJatekosData,
   insertJatekosData,

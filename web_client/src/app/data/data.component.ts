@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/get_data_services/data.service';
 import { DeleteDataService } from '../services/delete_data_services/delete-data.service';
+import { UpdateDataService } from '../services/update_data_services/update-data.service';
 import { SnackbarService } from '../services/snackbar_service/snackbar.service';
 
 @Component({
@@ -23,6 +24,7 @@ export class DataComponent implements OnInit {
     private dataService: DataService,
     private deleteDataServices: DeleteDataService,
     private snackbar: SnackbarService,
+    private updateService: UpdateDataService
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +38,11 @@ export class DataComponent implements OnInit {
     this.getKerdesData();
     this.getValaszData();
   }
+
+  updateAdmin(admin: any) {
+    this.updateService.updateAdmin(admin[0], admin.felhasznalonev, admin.email, admin.jelszo);
+  }
+  
 
   deleteVerseny(VersenyID: number) {
     this.deleteDataServices.deleteVersenyData(VersenyID).subscribe(
@@ -189,6 +196,8 @@ export class DataComponent implements OnInit {
       this.valaszData = JSON.parse(data.valasz_data);
     });
   }
+
+
 
   
 }

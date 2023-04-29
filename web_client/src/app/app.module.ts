@@ -31,6 +31,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   imports: [
@@ -75,7 +76,8 @@ export class NavbarModule { }
     MatSnackBarModule,
     MatDatepickerModule,
     MatSelectModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatTableModule,
 
 
 
