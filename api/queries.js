@@ -178,7 +178,7 @@ const insertNewForum = (
 ) => {
   return new Promise((resolve, reject) => {
     const forumID = Math.floor(Math.random() * 50) + 1;
-    const sql = "INSERT INTO FORUM (FORUM_ID, NEV) VALUES (:forum_id, nev)";
+    const sql = "INSERT INTO FORUM (FORUM_ID, NEV) VALUES (:forum_id, :nev)";
     const binds = {
       forum_id: forumID,
       nev: nev,
