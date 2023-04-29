@@ -102,6 +102,42 @@ const insertJatekosData = (
   });
 };
 
+// UPDATE
+const updateJatekos = (connection, jatekos_id, nev ,felhasznalonev, email, jelszo, szuletesiDatum) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE JATEKOS SET nev = :nev, felhasznalonev = :felhasznalonev, email = :email, jelszo = :jelszo, szuletesiDatum = :szuletesiDatum WHERE jatekos_id = :jatekos_id";
+    const binds = {
+      jatekos_id: jatekos_id,
+      nev: nev,
+      felhasznalonev: felhasznalonev,
+      email: email,
+      jelszo: jelszo,
+      szuletesiDatum: szuletesiDatum,
+    };
+
+    connection.execute(
+      sql,
+      binds,
+      { autoCommit: true },
+      (err, result) => {
+        if (err) {
+          console.log("Hiba történt az update folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+          reject(err);
+        } else {
+          connection.commit((err) => {
+            if (err) {
+              console.log("Hiba történt a commit folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        }
+      }
+    );
+  });
+};
+
 // Minden verseny lekérdezése, frissítése, törlése
 
 // --- LEKÉRDEZÉS
@@ -924,6 +960,7 @@ module.exports = {
   //Jatekos
   getJatekosData,
   insertJatekosData,
+  updateJatekos,
   //verseny
   getVersenyData,
   insertNewVerseny,

@@ -396,11 +396,47 @@ app.put("/admin/:admin_id", async (req, res) => {
   const { felhasznalonev, email, jelszo } = req.body;
   console.log("index.js req.body: ", req.body);
   try {
-     connection = await databaseConn.connection_start();
-    const result = await queries.updateAdmin(connection, adminId, felhasznalonev, email, jelszo);
+    connection = await databaseConn.connection_start();
+    const result = await queries.updateAdmin(
+      connection,
+      adminId,
+      felhasznalonev,
+      email,
+      jelszo
+    );
     res.json(result);
   } catch (err) {
-    res.status(500).json({ error: "Hiba történt az update során. Hiba: ", err });
+    res
+      .status(500)
+      .json({ error: "Hiba történt az update során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
+//JATEKOS
+app.put("/jatekos/:jatekos_id", async (req, res) => {
+  const jatekosId = req.params.jatekos_id;
+  const { nev, felhasznalonev, email, jelszo, szuletesiDatum } = req.body;
+  console.log("index.js req.body: ", req.body);
+  try {
+    connection = await databaseConn.connection_start();
+    const result = await queries.updateAdmin(
+      connection,
+      jatekosId,
+      nev,
+      felhasznalonev,
+      email,
+      jelszo,
+      szuletesiDatum
+    );
+    res.json(result);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Hiba történt az update során. Hiba: ", err });
   } finally {
     if (connection) {
       await databaseConn.connection_close(connection);
@@ -411,20 +447,31 @@ app.put("/admin/:admin_id", async (req, res) => {
 //VERSENY
 app.put("/verseny/:id", async (req, res) => {
   const versenyId = req.params.id;
-  const { jatekos_id, nev, leiras, nyitasiDatum, engedelyezve, allapot } = req.body;
+  const { jatekos_id, nev, leiras, nyitasiDatum, engedelyezve, allapot } =
+    req.body;
   try {
     const connection = await databaseConn.connection_start();
-    const result = await queries.updateVerseny(connection, versenyId, jatekos_id, nev, leiras, nyitasiDatum, engedelyezve, allapot);
+    const result = await queries.updateVerseny(
+      connection,
+      versenyId,
+      jatekos_id,
+      nev,
+      leiras,
+      nyitasiDatum,
+      engedelyezve,
+      allapot
+    );
     res.json(result);
   } catch (err) {
-    res.status(500).json({ error: "Hiba történt az update során. Hiba: ", err });
+    res
+      .status(500)
+      .json({ error: "Hiba történt az update során. Hiba: ", err });
   } finally {
     if (connection) {
       await databaseConn.connection_close(connection);
     }
   }
 });
-
 
 //FORUM
 app.put("/forum/:id", async (req, res) => {

@@ -3,6 +3,7 @@ import { DataService } from '../services/get_data_services/data.service';
 import { DeleteDataService } from '../services/delete_data_services/delete-data.service';
 import { UpdateDataService } from '../services/update_data_services/update-data.service';
 import { SnackbarService } from '../services/snackbar_service/snackbar.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-data',
@@ -24,7 +25,8 @@ export class DataComponent implements OnInit {
     private dataService: DataService,
     private deleteDataServices: DeleteDataService,
     private snackbar: SnackbarService,
-    private updateService: UpdateDataService
+    private updateService: UpdateDataService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -39,11 +41,51 @@ export class DataComponent implements OnInit {
     this.getValaszData();
   }
 
-  updateAdmin(admin: any) {
-    this.updateService.updateAdmin(admin[0], admin.felhasznalonev, admin.email, admin.jelszo);
-  }
-  
+  // UPDATE METHODS 
 
+  // ADMIN
+  updateAdmin(admin: any) {
+    this.updateService.updateAdmin(admin[0], admin.felhasznalonev, admin.email, admin.jelszo)
+      .then(() => {
+        this.snackbar.show(['Sikeres adatfrissítés!']);
+        setTimeout(() => {
+          this.router.navigate(['/data'], { queryParams: { reload: true } });
+        }, 1500);
+      })
+      .catch(() => {
+        this.snackbar.show(['Adatfrissítés nem sikerült.']);
+      });
+  }
+
+  //JATEKOS
+  updateJatekos(jatekos: any) {
+    this.updateService.updateJatekos(jatekos[0], jatekos.nev, jatekos.felhasznalonev, jatekos.email, jatekos.jelszo, jatekos.szuletesiDatum)
+      .then(() => {
+        this.snackbar.show(['Sikeres adatfrissítés! ']);
+        setTimeout(() => {
+          this.router.navigate(['/data'], { queryParams: { reload: true } });
+        }, 1500);
+      })
+      .catch((err) => {
+        this.snackbar.show(['Adatfrissítés nem sikerült. Hiba: ', err]);
+      });
+  }
+
+  // VERSENY 
+
+  // FORUM
+
+  // HOZZASZOLAS
+
+  // TEMAKOR
+
+  // JATEKSZOBA
+
+  // KERDES
+
+  // VALASZ
+  // -----------------------------------------------------------------
+  // DELETE METHODS 
   deleteVerseny(VersenyID: number) {
     this.deleteDataServices.deleteVersenyData(VersenyID).subscribe(
       () => {
