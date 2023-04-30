@@ -419,7 +419,7 @@ app.put("/admin/:admin_id", async (req, res) => {
 //JATEKOS
 app.put("/jatekos/:jatekos_id", async (req, res) => {
   const jatekosId = req.params.jatekos_id;
-  const { nev, felhasznalonev, email, jelszo, szuletesiDatum } = req.body;
+  const { nev, felhasznalonev, email, jelszo, szuletesi_datum } = req.body;
   console.log("index.js req.body: ", req.body);
   try {
     connection = await databaseConn.connection_start();
@@ -430,7 +430,7 @@ app.put("/jatekos/:jatekos_id", async (req, res) => {
       felhasznalonev,
       email,
       jelszo,
-      szuletesiDatum
+      szuletesi_datum
     );
     res.json(result);
   } catch (err) {

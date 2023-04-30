@@ -12,8 +12,8 @@ export class UpdateDataService {
     return this.http.put(`http://localhost:3000/admin/${admin_id}`, { felhasznalonev, email, jelszo}).toPromise();
   }
 
-  updateJatekos(jatekos_id: string, nev: string, felhasznalonev: string, email: string, jelszo: string, szuletesiDatum: string) {
-    return this.http.put(`http://localhost:3000/jatekos/${jatekos_id}`, {nev, felhasznalonev, email, jelszo, szuletesiDatum}).toPromise();
+  updateJatekos(jatekos_id: string, nev: string, felhasznalonev: string, email: string, jelszo: string, szuletesi_datum: string) {
+    return this.http.put(`http://localhost:3000/jatekos/${jatekos_id}`, {nev, felhasznalonev, email, jelszo, szuletesi_datum}).toPromise();
   }
 
   updateVerseny(versenyId: string, jatekos_id: string, nev: string, leiras: string, nyitasiDatum: string, engedelyezve: string, allapot: string) {

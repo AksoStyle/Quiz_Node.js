@@ -64,7 +64,7 @@
       <td>{{ jatekos[3] }}</td>
       <td>{{ jatekos[4] }}</td>
       <td>{{ jatekos[5] }}</td>
-      
+
     </tr>
     <tr>
       <td>{{ jatekos[0] }}</td>
@@ -88,7 +88,7 @@
           <input matInput [(ngModel)]="jatekos.jelszo" type="password" placeholder="{{ jatekos[4] }}">
         </mat-form-field>
       </td>
-      
+
       <td>
         <mat-form-field>
           <input matInput [matDatepicker]="picker" [(ngModel)]="jatekos.szuletesiDatum" placeholder="{{ jatekos[5] }}">
@@ -115,11 +115,12 @@
       <th>Nyítási Dátum</th>
       <th>Engedélyezve</th>
       <th>Állapot</th>
-      <th>Törlés</th>
+      <th>Törlés/Update</th>
+      
     </tr>
   </thead>
-  <tbody>
-    <tr *ngFor="let verseny of versenyData">
+  <tbody *ngFor="let verseny of versenyData">
+    <tr>
       <td>{{ verseny[0] }}</td>
       <td>{{ verseny[1] }}</td>
       <td>{{ verseny[2] }}</td>
@@ -133,8 +134,41 @@
         </button>
       </td>
     </tr>
+    <tr>
+      <td>{{ verseny[0] }}</td>
+      <td>
+        <input [(ngModel)]="verseny.jatekos_ID" placeholder="{{ verseny[1] }}">
+      </td>
+      <td>
+        <input [(ngModel)]="verseny.nev" placeholder="{{ verseny[2] }}">
+      </td>
+      <td>
+        <input [(ngModel)]="verseny.leiras" placeholder="{{ verseny[3] }}">
+      </td>
+      <td>
+        <input [matDatepicker]="picker" [(ngModel)]="verseny.nyitasiDatum" placeholder="{{ verseny[4] }}">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </td>
+      <td>
+        <select [(ngModel)]="verseny.engedelyezve">
+          <option value="igen">Igen</option>
+          <option value="nem">Nem</option>
+        </select>
+      </td>
+      <td>
+        <select [(ngModel)]="verseny.allapot">
+          <option value="aktív">aktív</option>
+          <option value="inaktív">inaktív</option>
+        </select>
+      </td>
+      <td>
+        <button mat-button (click)="updateJatekos(verseny)">Update</button>
+      </td>
+    </tr>
   </tbody>
 </table>
+
 
 <!-- FÓRUM TÁBLA ADATOK -->
 <h1>Fórum adatok:</h1>

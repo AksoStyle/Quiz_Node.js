@@ -103,16 +103,16 @@ const insertJatekosData = (
 };
 
 // UPDATE
-const updateJatekos = (connection, jatekos_id, nev ,felhasznalonev, email, jelszo, szuletesiDatum) => {
+const updateJatekos = (connection, jatekos_id, nev ,felhasznalonev, email, jelszo, szuletesi_datum) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE JATEKOS SET nev = :nev, felhasznalonev = :felhasznalonev, email = :email, jelszo = :jelszo, szuletesiDatum = :szuletesiDatum WHERE jatekos_id = :jatekos_id";
+    const sql = "UPDATE JATEKOS SET NEV = :nev, felhasznalonev = :felhasznalonev, email = :email, jelszo = :jelszo, szuletesi_datum = :szuletesi_datum WHERE jatekos_id = :jatekos_id";
     const binds = {
       jatekos_id: jatekos_id,
       nev: nev,
       felhasznalonev: felhasznalonev,
       email: email,
       jelszo: jelszo,
-      szuletesiDatum: szuletesiDatum,
+      szuletesi_datum: szuletesi_datum,
     };
 
     connection.execute(
@@ -230,7 +230,7 @@ const deleteVersenyData = (connection, versenyId) => {
 // ---- UPDATE
 const updateVerseny = (connection, verseny_id, jatekos_id, nev, leiras, nyitasiDatum, engedelyezve, allapot) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE FORUM SET NEV = :nev, LEIRAS = :leiras, nyitasiDatuma = :nyitasiDatuma, engedelyezve = :engedelyezve, allapot = :allapot WHERE verseny_id = :verseny_id";
+    const sql = "UPDATE VERSENY SET JATEKOS_ID = :jatekos_id, NEV = :nev, LEIRAS = :leiras, nyitasiDatuma = :nyitasiDatuma, engedelyezve = :engedelyezve, allapot = :allapot WHERE verseny_id = :verseny_id";
     const binds = {
       verseny_id: verseny_id,
       jatekos_id: jatekos_id,

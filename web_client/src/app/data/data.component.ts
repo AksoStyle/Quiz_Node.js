@@ -73,17 +73,104 @@ export class DataComponent implements OnInit {
 
   // VERSENY 
 
+  updateVerseny(verseny: any){
+    this.updateService.updateVerseny(verseny[0], verseny.jatekos_ID, verseny.nev, verseny.leiras, verseny.nyitasiDatum, verseny.engedelyezve, verseny.allapot)
+    .then(() => {
+      this.snackbar.show(['Sikeres adatfrissítés! ']);
+      
+    })
+    
+  }
+
   // FORUM
+
+  updateForum(forum: any){
+    this.updateService.updateForum(forum[0], forum.nev)
+    .then(() => {
+      this.snackbar.show(['Sikeres adatfrissítés! ']);
+      setTimeout(() => {
+        this.router.navigate(['/data'], { queryParams: { reload: true } });
+      }, 1500);
+    })
+    .catch((err) => {
+      this.snackbar.show(['Adatfrissítés nem sikerült. Hiba: ', err]);
+    });
+  }
 
   // HOZZASZOLAS
 
+  updateHozzaszolas(hozzaszolas: any){
+    this.updateService.updateHozzaszolas(hozzaszolas[0], hozzaszolas.jatekos_id, hozzaszolas.forum_id, hozzaszolas.szoveg, hozzaszolas.datum)
+    .then(() => {
+      this.snackbar.show(['Sikeres adatfrissítés! ']);
+      setTimeout(() => {
+        this.router.navigate(['/data'], { queryParams: { reload: true } });
+      }, 1500);
+    })
+    .catch((err) => {
+      this.snackbar.show(['Adatfrissítés nem sikerült. Hiba: ', err]);
+    });
+  }
+
   // TEMAKOR
+
+  updateTemakor(temakor: any){
+    this.updateService.updateTemakor(temakor[0], temakor.forum_id, temakor.nev)
+    .then(() => {
+      this.snackbar.show(['Sikeres adatfrissítés! ']);
+      setTimeout(() => {
+        this.router.navigate(['/data'], { queryParams: { reload: true } });
+      }, 1500);
+    })
+    .catch((err) => {
+      this.snackbar.show(['Adatfrissítés nem sikerült. Hiba: ', err]);
+    });
+  }
 
   // JATEKSZOBA
 
+  updateJatekszoba(jatekszoba: any){
+    this.updateService.updateJatekszoba(jatekszoba[0], jatekszoba.jatekos_id, jatekszoba.temakor_id,jatekszoba.nehezsegi_szint, jatekszoba.idopont)
+    .then(() => {
+      this.snackbar.show(['Sikeres adatfrissítés! ']);
+      setTimeout(() => {
+        this.router.navigate(['/data'], { queryParams: { reload: true } });
+      }, 1500);
+    })
+    .catch((err) => {
+      this.snackbar.show(['Adatfrissítés nem sikerült. Hiba: ', err]);
+    });
+  }
+
   // KERDES
 
+  updateKerdes(kerdes: any){
+    this.updateService.updateKerdes(kerdes[0], kerdes.szoveg, kerdes.nehezsegi_szint)
+    .then(() => {
+      this.snackbar.show(['Sikeres adatfrissítés! ']);
+      setTimeout(() => {
+        this.router.navigate(['/data'], { queryParams: { reload: true } });
+      }, 1500);
+    })
+    .catch((err) => {
+      this.snackbar.show(['Adatfrissítés nem sikerült. Hiba: ', err]);
+    });
+  }
+
   // VALASZ
+
+  updateValasz(valasz: any){
+    this.updateService.updateValasz(valasz[0], valasz.kerdesId, valasz.szoveg, valasz.helyesseg)
+    .then(() => {
+      this.snackbar.show(['Sikeres adatfrissítés! ']);
+      setTimeout(() => {
+        this.router.navigate(['/data'], { queryParams: { reload: true } });
+      }, 1500);
+    })
+    .catch((err) => {
+      this.snackbar.show(['Adatfrissítés nem sikerült. Hiba: ', err]);
+    });
+  }
   // -----------------------------------------------------------------
   // DELETE METHODS 
   deleteVerseny(VersenyID: number) {
