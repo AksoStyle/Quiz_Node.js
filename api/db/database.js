@@ -7,7 +7,7 @@ let connection;
 async function connection_start(){
     try{
         
-        connection = await oracledb.getConnection(dbconfig);
+        connection = await oracledb.getConnection(dbconfig_peti);
         console.log('Sikeres kapcsolódás az adatbázishoz');
 
         return connection;
