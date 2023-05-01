@@ -30,6 +30,7 @@ async function get_data() {
   const kerdes_data = await queries.getKerdesData(connection);
   const valasz_data = await queries.getValaszData(connection);
 
+  const temakor_nevek = await queries.getTemakorNevek(connection);
   return {
     admin_data,
     jatekos_data,
@@ -41,6 +42,8 @@ async function get_data() {
     jatekosszoba_data,
     kerdes_data,
     valasz_data,
+    //temakornevek
+    temakor_nevek,
   };
 }
 
@@ -302,10 +305,7 @@ app.delete("/hozzaszolas/:id", async (req, res) => {
   const hozzaszolasId = req.params.id;
   try {
     const connection = await databaseConn.connection_start();
-    const result = await queries.deleteHozzaszolasData(
-      connection,
-      hozzaszolasId
-    );
+    const result = await queries.deleteHozzaszolasData(connection,hozzaszolasId);
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: "Hiba történt a törlés során. Hiba: ", err });

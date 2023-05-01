@@ -32,6 +32,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatTableModule } from '@angular/material/table';
+import { GameComponent } from './game/game.component';
+import { PlaygorundComponent } from './playgorund/playgorund.component';
 
 
 
@@ -39,6 +41,11 @@ import { MatTableModule } from '@angular/material/table';
   imports: [
     // ...
     MatSidenavModule
+  ],
+  declarations: [
+    
+  
+    
   ],
   // ...
 })
@@ -55,6 +62,8 @@ export class NavbarModule { }
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
+    GameComponent,
+    PlaygorundComponent
 
 
 
@@ -80,6 +89,7 @@ export class NavbarModule { }
     MatSelectModule,
     MatMomentDateModule,
     MatTableModule,
+    
 
 
 

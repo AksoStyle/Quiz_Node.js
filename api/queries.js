@@ -1,3 +1,24 @@
+
+
+//TÉMA NEVEK LEKÉRÉSE
+
+const getTemakorNevek = (connection) => {
+  return new Promise((resolve, reject) => {
+    connection.execute("SELECT nev FROM temakor", (err, result) => {
+      if(err){
+        console.log("Hiba történt a lekérdezés folyamán.");
+        reject(err);
+      }
+      const rows = result.rows;
+      const jsonData = JSON.stringify(rows);
+      resolve(jsonData);
+    })
+  })
+}
+
+
+//CRUD MŰVELETEK 
+
 // Minden Admin lekérdezése
 const getAdminData = (connection) => {
   return new Promise((resolve, reject) => {
@@ -995,4 +1016,8 @@ module.exports = {
   insertNewValasz,
   deleteValaszData,
   updateValasz,
+
+  //temakornevek
+  getTemakorNevek,
+  
 };

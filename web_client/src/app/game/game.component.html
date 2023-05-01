@@ -1,0 +1,22 @@
+<mat-card class="card">
+    <mat-card-content>
+      <mat-form-field class="select-field">
+        <mat-label>Topics</mat-label>
+        <mat-select [(ngModel)]="selectedTemakor">
+          <mat-option *ngFor="let temakor of temakor_nevek" [value]="temakor">{{ temakor }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field class="select-field">
+        <mat-label>Level</mat-label>
+        <mat-select [(ngModel)]="selectedLevel">
+          <mat-option value="1">1 - easy </mat-option>
+          <mat-option value="2">2 - medium</mat-option>
+          <mat-option value="3">3 - Hard</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <button mat-raised-button class="start-button" (click)="start(selectedTemakor, selectedLevel)">Start</button>
+    </mat-card-content>
+  </mat-card>
+  

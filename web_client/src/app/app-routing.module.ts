@@ -9,6 +9,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminpageComponent } from './adminpage/adminpage.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { GameComponent } from './game/game.component';
+import { PlaygorundComponent } from './playgorund/playgorund.component';
 
 
 
@@ -21,7 +23,10 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'navbar', component: NavbarComponent }
+  { path: 'navbar', component: NavbarComponent },
+  { path: 'game', component: GameComponent},
+  { path: 'playground', component: PlaygorundComponent},
+  
 ];
 
 
