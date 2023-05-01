@@ -27,7 +27,7 @@ export class DataComponent implements OnInit {
     email: new FormControl('', Validators.required),
     jelszo: new FormControl('', Validators.required),
   });
-  
+
   updateJatekosData = new FormGroup({
     nev: new FormControl('', Validators.required),
     felhasznalonev: new FormControl('', Validators.required),
@@ -54,6 +54,30 @@ export class DataComponent implements OnInit {
     forum_id: new FormControl('', Validators.required),
     szoveg: new FormControl('', Validators.required),
     datum: new FormControl('', Validators.required),
+});
+
+updateTemakorData = new FormGroup({
+  forum_id: new FormControl('', Validators.required),
+  nev: new FormControl('', Validators.required)
+});
+
+updateJatekszobaData = new FormGroup({
+  jatekos_id: new FormControl('', Validators.required),
+  temakor_id: new FormControl('', Validators.required),
+  nehezsegi_szint: new FormControl('', Validators.required),
+  idopont: new FormControl('', Validators.required)
+});
+
+updateKerdesData = new FormGroup({
+  temakor_id: new FormControl('', Validators.required),
+  szoveg: new FormControl('', Validators.required),
+  nehezsegi_szint: new FormControl('', Validators.required)
+});
+
+updateValaszData = new FormGroup({
+  kerdes_id: new FormControl('', Validators.required),
+  szoveg: new FormControl('', Validators.required),
+  helyesseg: new FormControl('', Validators.required)
 });
   
   
@@ -223,10 +247,10 @@ export class DataComponent implements OnInit {
 
   updateHozzaszolas(id: string){
 
-    const jatekos_id = this.updateForumData.get('jatekos_id')?.value;
-    const forum_id = this.updateForumData.get('forum_id')?.value;
-    const szoveg = this.updateForumData.get('szoveg')?.value;
-    const datum = this.updateForumData.get('datum')?.value;
+    const jatekos_id = this.updateHozzaszolasData.get('jatekos_id')?.value;
+    const forum_id = this.updateHozzaszolasData.get('forum_id')?.value;
+    const szoveg = this.updateHozzaszolasData.get('szoveg')?.value;
+    const datum = this.updateHozzaszolasData.get('datum')?.value;
     
     const datumDate = new Date(datum!);
 
@@ -264,8 +288,17 @@ export class DataComponent implements OnInit {
 
   // TEMAKOR
 
-  updateTemakor(temakor: any){
-    this.updateService.updateTemakor(temakor[0], temakor.forum_id, temakor.nev)
+  updateTemakor(id: string){
+
+    const forum_id = this.updateTemakorData.get('forum_id')?.value;
+    const nev = this.updateTemakorData.get('nev')?.value;
+
+    const temakorData = {
+      forum_id: forum_id!,
+      nev: nev!
+    }
+
+    this.updateService.updateTemakor(id, temakorData.forum_id, temakorData.nev)
     .then(() => {
       this.snackbar.show(['Sikeres adatfrissítés! ']);
       setTimeout(() => {
@@ -279,8 +312,36 @@ export class DataComponent implements OnInit {
 
   // JATEKSZOBA
 
-  updateJatekszoba(jatekszoba: any){
-    this.updateService.updateJatekszoba(jatekszoba[0], jatekszoba.jatekos_id, jatekszoba.temakor_id,jatekszoba.nehezsegi_szint, jatekszoba.idopont)
+  updateJatekszoba(id: string){
+
+    const jatekos_id = this.updateJatekszobaData.get('jatekos_id')?.value;
+    const temakor_id = this.updateJatekszobaData.get('temakor_id')?.value;
+    const nehezsegi_szint = this.updateJatekszobaData.get('nehezsegi_szint')!.value;
+    const idopont = this.updateJatekszobaData.get('idopont')?.value;
+
+    const datumDate = new Date(idopont!);
+    const jatekszobaData = {
+      jatekos_id: jatekos_id!,
+      temakor_id: temakor_id!,
+      nehezsegi_szint: nehezsegi_szint!,
+      idopont: datumDate!
+    }
+
+    function formatDate(date: Date) {
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+      const day = date.getDate();
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear().toString().substr(-2);
+    
+      return `${day}-${monthNames[monthIndex]}-${year}`;
+    }
+
+    const formattedDate = formatDate(jatekszobaData.idopont);
+    const nehezsegi_szint_int = parseInt(jatekszobaData.nehezsegi_szint);
+
+    this.updateService.updateJatekszoba(id, jatekszobaData.jatekos_id, jatekszobaData.temakor_id, nehezsegi_szint_int, formattedDate)
     .then(() => {
       this.snackbar.show(['Sikeres adatfrissítés! ']);
       setTimeout(() => {
@@ -294,8 +355,21 @@ export class DataComponent implements OnInit {
 
   // KERDES
 
-  updateKerdes(kerdes: any){
-    this.updateService.updateKerdes(kerdes[0], kerdes.szoveg, kerdes.nehezsegi_szint)
+  updateKerdes(id: string){
+
+    const temakor_id = this.updateKerdesData.get('temakor_id')?.value;
+    const szoveg = this.updateKerdesData.get('szoveg')?.value;
+    const nehezsegi_szint = this.updateKerdesData.get('nehezsegi_szint')?.value;
+
+    const kerdesData = {
+      temakor_id: temakor_id!,
+      szoveg: szoveg!,
+      nehezsegi_szint: nehezsegi_szint!
+    }
+
+    const nehezsegi_szint_int = parseInt(kerdesData.nehezsegi_szint);
+
+    this.updateService.updateKerdes(id, kerdesData.temakor_id, kerdesData.szoveg, nehezsegi_szint_int)
     .then(() => {
       this.snackbar.show(['Sikeres adatfrissítés! ']);
       setTimeout(() => {
@@ -309,8 +383,21 @@ export class DataComponent implements OnInit {
 
   // VALASZ
 
-  updateValasz(valasz: any){
-    this.updateService.updateValasz(valasz[0], valasz.kerdesId, valasz.szoveg, valasz.helyesseg)
+  updateValasz(id: string){
+
+    const kerdes_id = this.updateValaszData.get('kerdes_id')?.value;
+    const szoveg = this.updateValaszData.get('szoveg')?.value;
+    const helyesseg = this.updateValaszData.get('helyesseg')?.value;
+
+    const valaszData = {
+      kerdes_id: kerdes_id!,
+      szoveg: szoveg!,
+      helyesseg: helyesseg!
+    }
+
+    const helyesseg_int = parseInt(valaszData.helyesseg);
+
+    this.updateService.updateValasz(id, valaszData.kerdes_id, valaszData.szoveg, helyesseg_int)
     .then(() => {
       this.snackbar.show(['Sikeres adatfrissítés! ']);
       setTimeout(() => {
