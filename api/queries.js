@@ -118,7 +118,6 @@ const updateJatekos = (connection, jatekos_id, nev ,felhasznalonev, email, jelsz
     connection.execute(
       sql,
       binds,
-      { autoCommit: true },
       (err, result) => {
         if (err) {
           console.log("Hiba történt az update folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
@@ -228,15 +227,15 @@ const deleteVersenyData = (connection, versenyId) => {
 };
 
 // ---- UPDATE
-const updateVerseny = (connection, verseny_id, jatekos_id, nev, leiras, nyitasiDatum, engedelyezve, allapot) => {
+const updateVerseny = (connection, verseny_id, jatekos_id, nev, leiras, nyitasDatuma, engedelyezve, allapot) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE VERSENY SET JATEKOS_ID = :jatekos_id, NEV = :nev, LEIRAS = :leiras, nyitasiDatuma = :nyitasiDatuma, engedelyezve = :engedelyezve, allapot = :allapot WHERE verseny_id = :verseny_id";
+    const sql = "UPDATE VERSENY SET JATEKOS_ID = :jatekos_id, NEV = :nev, LEIRAS = :leiras, NYITASDATUMA = :nyitasDatuma, engedelyezve = :engedelyezve, allapot = :allapot WHERE verseny_id = :verseny_id";
     const binds = {
       verseny_id: verseny_id,
       jatekos_id: jatekos_id,
       nev: nev,
       leiras: leiras,
-      nyitasiDatuma: nyitasiDatum,
+      nyitasDatuma: nyitasDatuma,
       engedelyezve: engedelyezve,
       allapot: allapot,
     };

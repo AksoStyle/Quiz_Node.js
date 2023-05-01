@@ -393,7 +393,7 @@ app.delete("/valasz/:id", async (req, res) => {
 //ADMIN
 app.put("/admin/:admin_id", async (req, res) => {
   const adminId = req.params.admin_id;
-  console.log("index.js adminId: " , adminId);
+  console.log("index.js adminId: ", adminId);
   const { felhasznalonev, email, jelszo } = req.body;
   console.log("index.js req.body: ", req.body);
   try {
@@ -404,35 +404,6 @@ app.put("/admin/:admin_id", async (req, res) => {
       felhasznalonev,
       email,
       jelszo
-    );
-    res.json(result);
-  } catch (err) {
-    res
-      .status(500)
-      .json({ error: "Hiba történt az update során. Hiba: ", err });
-  } finally {
-    if (connection) {
-      await databaseConn.connection_close(connection);
-    }
-  }
-});
-
-//JATEKOS
-app.put("/jatekos/:jatekos_id", async (req, res) => {
-  const jatekos_id = parseInt(req.params.jatekos_id);
-  console.log("index.js jatekos_id type:", typeof jatekos_id , " jatekos_id: ", jatekos_id);
-  const { nev, felhasznalonev, email, jelszo, szuletesi_datum } = req.body;
-  console.log("index.js req.body: ", req.body);
-  try {
-    connection = await databaseConn.connection_start();
-    const result = await queries.updateAdmin(
-      connection,
-      jatekos_id,
-      nev,
-      felhasznalonev,
-      email,
-      jelszo,
-      szuletesi_datum
     );
     res.json(result);
     console.log(result);
@@ -447,23 +418,54 @@ app.put("/jatekos/:jatekos_id", async (req, res) => {
   }
 });
 
+//JATEKOS
+app.put("/jatekos/:jatekos_id", async (req, res) => {
+  const jatekos_id = parseInt(req.params.jatekos_id);
+
+  const { nev, felhasznalonev, email, jelszo, szuletesi_datum } = req.body;
+
+  try {
+    connection = await databaseConn.connection_start();
+    const result = await queries.updateJatekos(
+      connection,
+      jatekos_id,
+      nev,
+      felhasznalonev,
+      email,
+      jelszo,
+      szuletesi_datum
+    );
+    res.json(result);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Hiba történt az update során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
 //VERSENY
 app.put("/verseny/:id", async (req, res) => {
   const versenyId = req.params.id;
-  const { jatekos_id, nev, leiras, nyitasiDatum, engedelyezve, allapot } =
+  const { jatekos_id, nev, leiras, nyitasDatuma, engedelyezve, allapot } =
     req.body;
+  console.log("index.js, req.body: ", req.body);
   try {
-    const connection = await databaseConn.connection_start();
+    connection = await databaseConn.connection_start();
     const result = await queries.updateVerseny(
       connection,
       versenyId,
       jatekos_id,
       nev,
       leiras,
-      nyitasiDatum,
+      nyitasDatuma,
       engedelyezve,
       allapot
     );
+
     res.json(result);
   } catch (err) {
     res

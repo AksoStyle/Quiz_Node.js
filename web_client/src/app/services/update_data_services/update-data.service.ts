@@ -16,8 +16,8 @@ export class UpdateDataService {
     return this.http.put(`http://localhost:3000/jatekos/${jatekos_id}`, {nev, felhasznalonev, email, jelszo, szuletesi_datum}).toPromise();
   }
 
-  updateVerseny(versenyId: string, jatekos_id: string, nev: string, leiras: string, nyitasiDatum: string, engedelyezve: string, allapot: string) {
-    return this.http.put(`http://localhost:3000/verseny/${versenyId}`, { jatekos_id, nev, leiras, nyitasiDatum, engedelyezve, allapot }).toPromise();
+  updateVerseny(versenyId: string, jatekos_id: string, nev: string, leiras: string, nyitasDatuma: string, engedelyezve: string, allapot: string) {
+    return this.http.put(`http://localhost:3000/verseny/${versenyId}`, { jatekos_id, nev, leiras, nyitasDatuma, engedelyezve, allapot }).toPromise();
   }
 
   updateForum(forumId: string, nev: string) {
