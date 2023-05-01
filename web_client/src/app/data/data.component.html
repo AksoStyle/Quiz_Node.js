@@ -202,6 +202,21 @@
   </tbody>
 </table>
 
+<!-- Fórum tábla módosítás -->
+
+<mat-card *ngFor="let forum of forumData">
+  <mat-card-title>Update Forum #{{ forum[0] }}</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="updateForumData" (ngSubmit)="updateForum(forum[0])">
+      <mat-form-field appearance="fill">
+        <mat-label>Név</mat-label>
+        <input matInput type="text" name="nev"  formControlName="nev" placeholder="{{ forum[1] }}">
+      </mat-form-field>
+      <button mat-raised-button type="submit">Update</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
 <!-- HOZZÁSZÓLÁS TÁBLA ADATOK -->
 <h1>Hozzászólás adatok:</h1>
 <table>
@@ -229,6 +244,34 @@
     </tr>
   </tbody>
 </table>
+
+<!-- Hozzászólás tábla módosítás -->
+<mat-card *ngFor="let hozzaszolas of hozzaszolasData">
+  <mat-card-title>Update admin #{{ hozzaszolas[0] }}</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="updateHozzaszolasData" (ngSubmit)="updateHozzaszolas(hozzaszolas[0])">
+      <mat-form-field appearance="fill">
+        <mat-label>jatekos_id</mat-label>
+        <input matInput type="text" name="jatekos_id"  formControlName="jatekos_id" placeholder="{{ hozzaszolas[1] }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>forum_id</mat-label>
+        <input matInput type="text" name="forum_id" formControlName="forum_id" placeholder="{{ hozzaszolas[2] }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>szöveg</mat-label>
+        <input matInput type="text" name="szoveg" formControlName="szoveg" placeholder="{{ hozzaszolas[3] }}">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label for="datum">dátum: </mat-label>
+        <input matInput [matDatepicker]="datumPicker" placeholder="{{ hozzaszolas[4]}}" formControlName="datum">
+        <mat-datepicker-toggle matSuffix [for]="datumPicker"></mat-datepicker-toggle>
+        <mat-datepicker #datumPicker></mat-datepicker>
+      </mat-form-field>
+      <button mat-raised-button type="submit">Update</button>
+    </form>
+  </mat-card-content>
+</mat-card>
 
 <!-- TÉMAKÖR TÁBLA ADATOK -->
 <h1>Témakör adatok:</h1>

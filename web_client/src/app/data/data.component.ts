@@ -27,7 +27,7 @@ export class DataComponent implements OnInit {
     email: new FormControl('', Validators.required),
     jelszo: new FormControl('', Validators.required),
   });
-
+  
   updateJatekosData = new FormGroup({
     nev: new FormControl('', Validators.required),
     felhasznalonev: new FormControl('', Validators.required),
@@ -44,6 +44,18 @@ export class DataComponent implements OnInit {
     engedelyezve: new FormControl('', Validators.required),
     allapot: new FormControl('', Validators.required),
   });
+
+  updateForumData = new FormGroup({
+    nev: new FormControl('', Validators.required),
+  });
+
+  updateHozzaszolasData = new FormGroup({
+    jatekos_id: new FormControl('', Validators.required),
+    forum_id: new FormControl('', Validators.required),
+    szoveg: new FormControl('', Validators.required),
+    datum: new FormControl('', Validators.required),
+});
+  
   
 
   constructor(
@@ -188,8 +200,14 @@ export class DataComponent implements OnInit {
 
   // FORUM
 
-  updateForum(forum: any){
-    this.updateService.updateForum(forum[0], forum.nev)
+  updateForum(id: string){
+    const nev = this.updateForumData.get('nev')?.value;
+
+    const forumData = {
+      nev: nev!
+    }
+
+    this.updateService.updateForum(id, forumData.nev)
     .then(() => {
       this.snackbar.show(['Sikeres adatfrissítés! ']);
       setTimeout(() => {
@@ -203,8 +221,36 @@ export class DataComponent implements OnInit {
 
   // HOZZASZOLAS
 
-  updateHozzaszolas(hozzaszolas: any){
-    this.updateService.updateHozzaszolas(hozzaszolas[0], hozzaszolas.jatekos_id, hozzaszolas.forum_id, hozzaszolas.szoveg, hozzaszolas.datum)
+  updateHozzaszolas(id: string){
+
+    const jatekos_id = this.updateForumData.get('jatekos_id')?.value;
+    const forum_id = this.updateForumData.get('forum_id')?.value;
+    const szoveg = this.updateForumData.get('szoveg')?.value;
+    const datum = this.updateForumData.get('datum')?.value;
+    
+    const datumDate = new Date(datum!);
+
+    const hozzaszolasData = {
+      jatekos_id: jatekos_id!,
+      forum_id: forum_id!,
+      szoveg: szoveg!,
+      datum: datumDate!
+    }
+
+    function formatDate(date: Date) {
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+      const day = date.getDate();
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear().toString().substr(-2);
+    
+      return `${day}-${monthNames[monthIndex]}-${year}`;
+    }
+
+    const formattedDate = formatDate(hozzaszolasData.datum);
+
+    this.updateService.updateHozzaszolas(id, hozzaszolasData.jatekos_id, hozzaszolasData.forum_id, hozzaszolasData.szoveg, formattedDate)
     .then(() => {
       this.snackbar.show(['Sikeres adatfrissítés! ']);
       setTimeout(() => {

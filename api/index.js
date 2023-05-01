@@ -502,7 +502,7 @@ app.put("/hozzaszolas/:id", async (req, res) => {
   const hozzaszolasId = req.params.id;
   const { jatekos_id, forum_id, szoveg, datum } = req.body;
   try {
-    const connection = await databaseConn.connection_start();
+     connection = await databaseConn.connection_start();
     const result = await queries.updateHozzaszolas(
       connection,
       hozzaszolasId,
