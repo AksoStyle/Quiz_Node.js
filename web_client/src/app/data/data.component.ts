@@ -27,6 +27,23 @@ export class DataComponent implements OnInit {
     email: new FormControl('', Validators.required),
     jelszo: new FormControl('', Validators.required),
   });
+  
+  updateJatekosData = new FormGroup({
+    nev: new FormControl('', Validators.required),
+    felhasznalonev: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    jelszo: new FormControl('', Validators.required),
+    szuletesi_datum: new FormControl('', Validators.required),
+  });
+
+  updateVersenyData = new FormGroup({
+    jatekos_id: new FormControl('', Validators.required),
+    nev: new FormControl('', Validators.required),
+    leiras: new FormControl('', Validators.required),
+    nyitasiDatum: new FormControl('', Validators.required),
+    engedelyezve: new FormControl('', Validators.required),
+    allapot: new FormControl('', Validators.required),
+  });
 
   updateForumData = new FormGroup({
     nev: new FormControl('', Validators.required),
@@ -37,7 +54,8 @@ export class DataComponent implements OnInit {
     forum_id: new FormControl('', Validators.required),
     szoveg: new FormControl('', Validators.required),
     datum: new FormControl('', Validators.required),
-  });
+});
+  
   
 
   constructor(
@@ -97,8 +115,37 @@ export class DataComponent implements OnInit {
   }
 
   //JATEKOS
-  updateJatekos(jatekos: any) {
-    this.updateService.updateJatekos(jatekos[0], jatekos.nev, jatekos.felhasznalonev, jatekos.email, jatekos.jelszo, jatekos.szuletesiDatum)
+  updateJatekos(id : string) {
+    const nev = this.updateJatekosData.get('nev')?.value;
+    const felhasznalonev = this.updateJatekosData.get('felhasznalonev')?.value;
+    const email = this.updateJatekosData.get('email')?.value;
+    const jelszo = this.updateJatekosData.get('jelszo')?.value;
+    const szuletesi_datum = this.updateJatekosData.get('szuletesi_datum')?.value;
+    
+    const birthDate = new Date(szuletesi_datum!);
+    const jatekosData = {
+      nev: nev!,
+      felhasznalonev: felhasznalonev!,
+      email: email!,
+      jelszo: jelszo!,
+      szuletesi_datum: birthDate,
+    }
+
+    function formatDate(date: Date) {
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+      const day = date.getDate();
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear().toString().substr(-2);
+    
+      return `${day}-${monthNames[monthIndex]}-${year}`;
+    }
+
+    const formattedDate = formatDate(jatekosData.szuletesi_datum);
+
+
+    this.updateService.updateJatekos(id, jatekosData.nev, jatekosData.felhasznalonev, jatekosData.email, jatekosData.jelszo, formattedDate)
       .then(() => {
         this.snackbar.show(['Sikeres adatfrissítés! ']);
         setTimeout(() => {
@@ -112,8 +159,38 @@ export class DataComponent implements OnInit {
 
   // VERSENY 
 
-  updateVerseny(verseny: any){
-    this.updateService.updateVerseny(verseny[0], verseny.jatekos_ID, verseny.nev, verseny.leiras, verseny.nyitasiDatum, verseny.engedelyezve, verseny.allapot)
+  updateVerseny(id: string){
+    const jatekos_id = this.updateVersenyData.get('jatekos_id')?.value;
+    const nev = this.updateVersenyData.get('nev')?.value;
+    const leiras = this.updateVersenyData.get('leiras')?.value;
+    const nyitasiDatum = this.updateVersenyData.get('nyitasiDatum')?.value;
+    const engedelyezve = this.updateVersenyData.get('engedelyezve')?.value;
+    const allapot = this.updateVersenyData.get('allapot')?.value;
+    
+    const gamestartDate = new Date(nyitasiDatum!);
+    const versenyData = {
+      jatekos_id: jatekos_id!,
+      nev: nev!,
+      leiras: leiras!,
+      nyitasiDatum: gamestartDate,
+      engedelyezve: engedelyezve!,
+      allapot: allapot!,
+    }
+
+    function formatDate(date: Date) {
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
+      const day = date.getDate();
+      const monthIndex = date.getMonth();
+      const year = date.getFullYear().toString().substr(-2);
+    
+      return `${day}-${monthNames[monthIndex]}-${year}`;
+    }
+
+    const formattedDate = formatDate(versenyData.nyitasiDatum);
+    console.log("versenyData: ", versenyData);
+    this.updateService.updateVerseny(id, versenyData.jatekos_id, versenyData.nev, versenyData.leiras, formattedDate, versenyData.engedelyezve, versenyData.allapot)
     .then(() => {
       this.snackbar.show(['Sikeres adatfrissítés! ']);
       
