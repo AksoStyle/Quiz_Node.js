@@ -478,7 +478,7 @@ const deleteHozzaszolasData = (connection, hozzaszolasId) => {
 // ---- UPDATE
 const updateHozzaszolas = (connection, hozzaszolas_id, jatekos_id, forum_id, szoveg, datum) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE HOZZASZOLAS SET SZOVEG = :szoveg, datum = :datum WHERE hozzaszolas_id = :hozzaszolas_id";
+    const sql = "UPDATE HOZZASZOLAS SET jatekos_id = :jatekos_id, forum_id = :forum_id, SZOVEG = :szoveg, datum = :datum WHERE hozzaszolas_id = :hozzaszolas_id";
     const binds = {
       hozzaszolas_id: hozzaszolas_id,
       jatekos_id: jatekos_id,
@@ -588,7 +588,7 @@ const deleteTemakorData = (connection, temakor_id) => {
 // ---- UPDATE
 const updateTemakor = (connection, temakor_id, forum_id, nev) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE TEMAKOR SET nev = :nev WHERE TEMAKOR_ID = :temakor_id";
+    const sql = "UPDATE TEMAKOR SET forum_id = :forum_id, nev = :nev WHERE TEMAKOR_ID = :temakor_id";
     const binds = {
       temakor_id: temakor_id,
       forum_id: forum_id,
@@ -707,7 +707,7 @@ const deleteJatekszobaData = (connection, jatekszobaId) => {
 // ---- UPDATE
 const updateJatekszoba = (connection, jatekosszoba_id, jatekos_id, temakor_id, nehezsegi_szint, idopont) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE JATEKSZOBA SET NEHEZSEGI_SZINT = :nehezsegi_szint, idopont = :idopont WHERE JATEKOSSZOBA_ID = :jatekosszoba_id";
+    const sql = "UPDATE JATEKSZOBA SET jatekos_id = :jatekos_id, temakor_id = :temakor_id, NEHEZSEGI_SZINT = :nehezsegi_szint, idopont = :idopont WHERE JATEKOSSZOBA_ID = :jatekosszoba_id";
     const binds = {
       jatekosszoba_id: jatekosszoba_id,
       jatekos_id: jatekos_id,
@@ -822,11 +822,12 @@ const deleteKerdesData = (connection, kerdesId) => {
 };
 
 // ---- UPDATE
-const updateKerdes = (connection, kerdesId, szoveg, nehezsegi_szint) => {
+const updateKerdes = (connection, kerdes_id, temakor_id, szoveg, nehezsegi_szint) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE KERDES SET SZOVEG = :szoveg, NEHEZSEGI_SZINT = :nehezsegi_szint WHERE KERDES_ID = :kerdes_id";
+    const sql = "UPDATE KERDES SET temakor_id = :temakor_id, SZOVEG = :szoveg, NEHEZSEGI_SZINT = :nehezsegi_szint WHERE KERDES_ID = :kerdes_id";
     const binds = {
-      kerdes_id: kerdesId,
+      kerdes_id: kerdes_id,
+      temakor_id:temakor_id,
       szoveg: szoveg,
       nehezsegi_szint: nehezsegi_szint,
     };
@@ -941,12 +942,12 @@ const deleteValaszData = (connection, valaszId) => {
 };
 
 // ---- UPDATE
-const updateValasz = (connection, valaszId, kerdesId, szoveg, helyesseg) => {
+const updateValasz = (connection, valasz_id, kerdes_id, szoveg, helyesseg) => {
   return new Promise((resolve, reject) => {
-    const sql = "UPDATE VALASZ SET SZOVEG = :szoveg, helyesseg = :helyesseg WHERE VALASZ_ID = :valasz_id";
+    const sql = "UPDATE VALASZ SET kerdes_id = :kerdes_id, SZOVEG = :szoveg, helyesseg = :helyesseg WHERE VALASZ_ID = :valasz_id";
     const binds = {
-      valasz_id: valaszId,
-      kerdes_id: kerdesId,
+      valasz_id: valasz_id,
+      kerdes_id: kerdes_id,
       szoveg: szoveg,
       helyesseg: helyesseg,
     };

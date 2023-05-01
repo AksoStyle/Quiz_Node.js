@@ -247,7 +247,7 @@
 
 <!-- Hozzászólás tábla módosítás -->
 <mat-card *ngFor="let hozzaszolas of hozzaszolasData">
-  <mat-card-title>Update admin #{{ hozzaszolas[0] }}</mat-card-title>
+  <mat-card-title>Update hozzaszolas#{{ hozzaszolas[0] }}</mat-card-title>
   <mat-card-content>
     <form [formGroup]="updateHozzaszolasData" (ngSubmit)="updateHozzaszolas(hozzaszolas[0])">
       <mat-form-field appearance="fill">
@@ -297,6 +297,25 @@
   </tbody>
 </table>
 
+<!--Témakör tábla adatok módosítása-->
+
+<mat-card *ngFor="let temakor of temakorData">
+  <mat-card-title>Update temakor#{{ temakor[0] }}</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="updateTemakorData" (ngSubmit)="updateTemakor(temakor[0])">
+      <mat-form-field appearance="fill">
+        <mat-label>forum_id</mat-label>
+        <input matInput type="text" name="forum_id" formControlName="forum_id" placeholder="{{ temakor[1] }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Név</mat-label>
+        <input matInput type="text" name="nev"  formControlName="nev" placeholder="{{ temakor[2] }}">
+      </mat-form-field>
+      <button mat-raised-button type="submit">Update</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
 <!-- JÁTÉKSZOBA TÁBLA ADATOK -->
 <h1>Játékszoba adatok:</h1>
 <table>
@@ -325,6 +344,34 @@
   </tbody>
 </table>
 
+<!-- Jatekszoba table módóosítasok -->
+<mat-card *ngFor="let jatekszoba of jatekszobaData">
+  <mat-card-title>Update jatekszoba#{{ jatekszoba[0] }}</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="updateJatekszobaData" (ngSubmit)="updateJatekszoba(jatekszoba[0])">
+      <mat-form-field appearance="fill">
+        <mat-label>jatekos_id</mat-label>
+        <input matInput type="text" name="jatekos_id"  formControlName="jatekos_id" placeholder="{{ jatekszoba[1] }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>temakor_id</mat-label>
+        <input matInput type="text" name="temakor_id" formControlName="temakor_id" placeholder="{{ jatekszoba[2] }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>nehézsegi szint</mat-label>
+        <input matInput type="text" name="nehezsegi_szint" formControlName="nehezsegi_szint" placeholder="{{ jatekszoba[3] }}">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label for="datum">Időpont: </mat-label>
+        <input matInput [matDatepicker]="idopontPicker" placeholder="{{ jatekszoba[4]}}" formControlName="idopont">
+        <mat-datepicker-toggle matSuffix [for]="idopontPicker"></mat-datepicker-toggle>
+        <mat-datepicker #idopontPicker></mat-datepicker>
+      </mat-form-field>
+      <button mat-raised-button type="submit">Update</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
 <!-- KÉRDÉS TÁBLA ADATOK -->
 <h1>Kérdés adatok:</h1>
 <table>
@@ -352,6 +399,28 @@
   </tbody>
 </table>
 
+<!-- Kérdés tábla módosítás -->
+<mat-card *ngFor="let kerdes of kerdesData">
+  <mat-card-title>Update kerdes#{{ kerdes[0] }}</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="updateKerdesData" (ngSubmit)="updateKerdes(kerdes[0])">
+      <mat-form-field appearance="fill">
+        <mat-label>temakor_id</mat-label>
+        <input matInput type="text" name="temakor_id" formControlName="temakor_id" placeholder="{{ kerdes[1] }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Szöveg</mat-label>
+        <input matInput type="text" name="szoveg"  formControlName="szoveg" placeholder="{{ kerdes[2] }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Nehézségi szint(1-3)</mat-label>
+        <input matInput type="text" name="nehezsegi_szint"  formControlName="nehezsegi_szint" placeholder="{{ kerdes[3] }}">
+      </mat-form-field>
+      <button mat-raised-button type="submit">Update</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
 <!-- VÁLASZ TÁBLA ADATOK -->
 <h1>Válasz adatok:</h1>
 <table>
@@ -378,3 +447,25 @@
     </tr>
   </tbody>
 </table>
+
+<!-- Válasz tábla módosítás -->
+<mat-card *ngFor="let valasz of valaszData">
+  <mat-card-title>Update valasz#{{ valasz[0] }}</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="updateValaszData" (ngSubmit)="updateValasz(valasz[0])">
+      <mat-form-field appearance="fill">
+        <mat-label>kérdés id</mat-label>
+        <input matInput type="text" name="kerdes_id" formControlName="kerdes_id" placeholder="{{ valasz[1] }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Szöveg</mat-label>
+        <input matInput type="text" name="szoveg"  formControlName="szoveg" placeholder="{{ valasz[2] }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Helyesség</mat-label>
+        <input matInput type="text" name="helyesseg"  formControlName="helyesseg" placeholder="{{ valasz[3] }}">
+      </mat-form-field>
+      <button mat-raised-button type="submit">Update</button>
+    </form>
+  </mat-card-content>
+</mat-card>

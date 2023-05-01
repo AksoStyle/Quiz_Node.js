@@ -499,13 +499,13 @@ app.put("/forum/:id", async (req, res) => {
 
 //HOZZASZOLAS
 app.put("/hozzaszolas/:id", async (req, res) => {
-  const hozzaszolasId = req.params.id;
+  const hozzaszolas_id = req.params.id;
   const { jatekos_id, forum_id, szoveg, datum } = req.body;
   try {
      connection = await databaseConn.connection_start();
     const result = await queries.updateHozzaszolas(
       connection,
-      hozzaszolasId,
+      hozzaszolas_id,
       jatekos_id,
       forum_id,
       szoveg,
@@ -525,13 +525,15 @@ app.put("/hozzaszolas/:id", async (req, res) => {
 
 //TEMAKOR
 app.put("/temakor/:id", async (req, res) => {
-  const temakorId = req.params.id;
+  const temakor_id = req.params.id;
   const { forum_id, nev } = req.body;
+  console.log('index.js req.body =>', req.body);
+  console.log('temakor id:', temakor_id);
   try {
-    const connection = await databaseConn.connection_start();
+    connection = await databaseConn.connection_start();
     const result = await queries.updateTemakor(
       connection,
-      temakorId,
+      temakor_id,
       forum_id,
       nev
     );
@@ -549,13 +551,13 @@ app.put("/temakor/:id", async (req, res) => {
 
 //JATEKSZOBA
 app.put("/jatekszoba/:id", async (req, res) => {
-  const jatekszobaId = req.params.id;
+  const jatekosszoba_id = req.params.id;
   const { jatekos_id, temakor_id, nehezsegi_szint, idopont } = req.body;
   try {
-    const connection = await databaseConn.connection_start();
+    connection = await databaseConn.connection_start();
     const result = await queries.updateJatekszoba(
       connection,
-      jatekszobaId,
+      jatekosszoba_id,
       jatekos_id,
       temakor_id,
       nehezsegi_szint,
@@ -578,7 +580,7 @@ app.put("/kerdes/:id", async (req, res) => {
   const kerdesId = req.params.id;
   const { szoveg, nehezsegi_szint } = req.body;
   try {
-    const connection = await databaseConn.connection_start();
+    connection = await databaseConn.connection_start();
     const result = await queries.updateKerdes(
       connection,
       kerdesId,
@@ -599,15 +601,15 @@ app.put("/kerdes/:id", async (req, res) => {
 
 // VALASZ
 app.put("/valasz/:id", async (req, res) => {
-  const valaszId = req.params.id;
-  const { kerdesId, szoveg, helyesseg } = req.body;
+  const valasz_id = req.params.id;
+  const { kerdes_id, szoveg, helyesseg } = req.body;
 
   try {
-    const connection = await databaseConn.connection_start();
+    connection = await databaseConn.connection_start();
     const result = await queries.updateValasz(
       connection,
-      valaszId,
-      kerdesId,
+      valasz_id,
+      kerdes_id,
       szoveg,
       helyesseg
     );

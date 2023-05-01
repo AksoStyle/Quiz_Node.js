@@ -24,24 +24,24 @@ export class UpdateDataService {
     return this.http.put(`http://localhost:3000/forum/${forumId}`, { nev }).toPromise();
   }
 
-  updateHozzaszolas(hozzaszolasId: string, jatekos_id: string, forum_id: string, szoveg: string, datum: string) {
-    return this.http.put(`http://localhost:3000/hozzaszolas/${hozzaszolasId}`, { jatekos_id, forum_id, szoveg, datum }).toPromise();
+  updateHozzaszolas(hozzaszolas_id: string, jatekos_id: string, forum_id: string, szoveg: string, datum: string) {
+    return this.http.put(`http://localhost:3000/hozzaszolas/${hozzaszolas_id}`, { jatekos_id, forum_id, szoveg, datum }).toPromise();
   }
 
-  updateTemakor(temakorId: string, forum_id: string, nev: string) {
-    return this.http.put(`http://localhost:3000/temakor/${temakorId}`, { forum_id, nev }).toPromise();
+  updateTemakor(temakor_id: string, forum_id: string, nev: string) {
+    return this.http.put(`http://localhost:3000/temakor/${temakor_id}`, { forum_id, nev }).toPromise();
   }
 
   updateJatekszoba(jatekszobaId: string, jatekos_id: string, temakor_id: string, nehezsegi_szint: number, idopont: string) {
     return this.http.put(`http://localhost:3000/jatekszoba/${jatekszobaId}`, { jatekos_id, temakor_id, nehezsegi_szint, idopont }).toPromise();
   }
 
-  updateKerdes(kerdesId: string, szoveg: string, nehezsegi_szint: number) {
-    return this.http.put(`http://localhost:3000/kerdes/${kerdesId}`, { szoveg, nehezsegi_szint }).toPromise();
+  updateKerdes(kerdesId: string, temakor_id: string, szoveg: string, nehezsegi_szint: number) {
+    return this.http.put(`http://localhost:3000/kerdes/${kerdesId}`, { temakor_id, szoveg, nehezsegi_szint }).toPromise();
   }
 
-  updateValasz(valaszId: string, kerdesId: string, szoveg: string, helyesseg: boolean) {
-    return this.http.put(`http://localhost:3000/valasz/${valaszId}`, { kerdesId, szoveg, helyesseg }).toPromise();
+  updateValasz(valaszId: string, kerdes_id: string, szoveg: string, helyesseg: number) {
+    return this.http.put(`http://localhost:3000/valasz/${valaszId}`, { kerdes_id, szoveg, helyesseg }).toPromise();
   }
 
 
