@@ -393,6 +393,7 @@ app.delete("/valasz/:id", async (req, res) => {
 //ADMIN
 app.put("/admin/:admin_id", async (req, res) => {
   const adminId = req.params.admin_id;
+  console.log("index.js adminId: " , adminId);
   const { felhasznalonev, email, jelszo } = req.body;
   console.log("index.js req.body: ", req.body);
   try {
@@ -418,14 +419,15 @@ app.put("/admin/:admin_id", async (req, res) => {
 
 //JATEKOS
 app.put("/jatekos/:jatekos_id", async (req, res) => {
-  const jatekosId = req.params.jatekos_id;
+  const jatekos_id = parseInt(req.params.jatekos_id);
+  console.log("index.js jatekos_id type:", typeof jatekos_id , " jatekos_id: ", jatekos_id);
   const { nev, felhasznalonev, email, jelszo, szuletesi_datum } = req.body;
   console.log("index.js req.body: ", req.body);
   try {
     connection = await databaseConn.connection_start();
     const result = await queries.updateAdmin(
       connection,
-      jatekosId,
+      jatekos_id,
       nev,
       felhasznalonev,
       email,
@@ -433,6 +435,7 @@ app.put("/jatekos/:jatekos_id", async (req, res) => {
       szuletesi_datum
     );
     res.json(result);
+    console.log(result);
   } catch (err) {
     res
       .status(500)

@@ -4,6 +4,7 @@ import { DeleteDataService } from '../services/delete_data_services/delete-data.
 import { UpdateDataService } from '../services/update_data_services/update-data.service';
 import { SnackbarService } from '../services/snackbar_service/snackbar.service';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-data',
@@ -21,13 +22,23 @@ export class DataComponent implements OnInit {
   kerdesData: Array<any> = [];
   valaszData: Array<any> = [];
 
+  updateAdminData = new FormGroup({
+    felhasznalonev: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    jelszo: new FormControl('', Validators.required),
+  });
+  
+
   constructor(
     private dataService: DataService,
     private deleteDataServices: DeleteDataService,
     private snackbar: SnackbarService,
     private updateService: UpdateDataService,
     private router: Router,
-  ) { }
+  ) {
+
+    
+   }
 
   ngOnInit(): void {
     this.getAdminData();
@@ -39,13 +50,30 @@ export class DataComponent implements OnInit {
     this.getJatekszobaData();
     this.getKerdesData();
     this.getValaszData();
+
+
+    
   }
+
+  
+
+
+
 
   // UPDATE METHODS 
 
   // ADMIN
-  updateAdmin(admin: any) {
-    this.updateService.updateAdmin(admin[0], admin.felhasznalonev, admin.email, admin.jelszo)
+  updateAdmin(id : string) {
+    const felhasznalonev = this.updateAdminData.get('felhasznalonev')?.value;
+    const email = this.updateAdminData.get('email')?.value;
+    const jelszo = this.updateAdminData.get('jelszo')?.value;
+
+    const adminData = {
+      felhasznalonev: felhasznalonev!,
+      email: email!,
+      jelszo: jelszo!
+    }
+    this.updateService.updateAdmin(id, adminData.felhasznalonev, adminData.email, adminData.jelszo)
       .then(() => {
         this.snackbar.show(['Sikeres adatfrissítés!']);
         setTimeout(() => {

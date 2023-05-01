@@ -41,3 +41,15 @@ table {
       background-color: #e2e6ea;
     }
   }
+
+  mat-card{
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+    width: 70%;
+
+    button{
+      margin-left: 2rem;
+    }
+
+  }

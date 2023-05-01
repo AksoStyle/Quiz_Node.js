@@ -7,40 +7,42 @@
       <th>Felhasználónév</th>
       <th>Email</th>
       <th>Jelszó</th>
-      <th>update</th>
     </tr>
   </thead>
   <tbody *ngFor="let admin of adminData">
     <tr>
-      <td>{{ admin[0] }}</td>
-      <td>{{ admin[1] }}</td>
-      <td>{{ admin[2] }}</td>
-      <td>{{ admin[3] }}</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>{{ admin[0] }}</td>
-      <td>
-        <mat-form-field>
-          <input matInput [(ngModel)]="admin.felhasznalonev" placeholder="{{ admin[1] }}">
-        </mat-form-field>
-      </td>
-      <td>
-        <mat-form-field>
-          <input matInput [(ngModel)]="admin.email" type="email" placeholder="{{ admin[2] }}">
-        </mat-form-field>
-      </td>
-      <td>
-        <mat-form-field>
-          <input matInput [(ngModel)]="admin.jelszo" type="password" placeholder="{{ admin[3] }}">
-        </mat-form-field>
-      </td>
-      <td>
-        <button mat-button (click)="updateAdmin(admin)">Update</button>
-      </td>
+      <td>{{ admin[0]}}</td>
+      <td>{{ admin[1]}}</td>
+      <td>{{ admin[2]}}</td>
+      <td>{{ admin[3]}}</td>
     </tr>
   </tbody>
 </table>
+
+<mat-card *ngFor="let admin of adminData">
+  <mat-card-title>Update admin #{{ admin[0] }}</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="updateAdminData" (ngSubmit)="updateAdmin(admin[0])">
+      <mat-form-field appearance="fill">
+        <mat-label>Felhasználónév</mat-label>
+        <input matInput type="text" name="felhasznalonev"  formControlName="felhasznalonev" placeholder="{{ admin[1] }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" name="email" formControlName="email" placeholder="{{ admin[2] }}">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Jelszó</mat-label>
+        <input matInput type="password" name="jelszo" formControlName="jelszo" placeholder="{{ admin[3] }}">
+      </mat-form-field>
+      <button mat-raised-button type="submit">Update</button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<!-- ADMIN TÁBLA MÓDOSÍTÁS -->
+
+
 
 <!-- JÁTÉKOS TÁBLA ADATAI -->
 <h1>Játékos adatok:</h1>
