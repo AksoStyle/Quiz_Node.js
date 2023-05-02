@@ -1,14 +1,18 @@
 
 .container{
-
-  justify-content: center;
-  text-align: center;
   width: 100%;
-  display: inline-block;
-
+  height: auto;
+  
+  text-align: center;
+  justify-content: center;
+  margin: 0 auto;
+  
   mat-card {
-    max-width: 40%;
+    width: 40%;
     margin: 2rem 0 0 2rem;
+    text-align: center;
+    justify-content: center;
+    
   
     mat-card-title {
       text-align: center;
@@ -30,5 +34,6 @@
       }
     }
   }
-
 }
+
+

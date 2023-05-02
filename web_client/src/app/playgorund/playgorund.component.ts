@@ -40,19 +40,20 @@ export class PlaygorundComponent implements OnInit {
       if (this.timeLeft > 0) {
         this.timeLeft--;
       } else {
-        //this.stopTimer();
+        this.stopTimer();
+        this.snackbarService.show(['Sajnos lejárt az időd.']);
       }
     }, 1000)
     setTimeout(() => {
       this.getCurrentQuestionAndAnswers();
     }, 1500);
-    
+
     this.userPontszam = this.userdataService.loginData.pontszam;
 
 
   }
 
-  scoreUP(score: number){
+  scoreUP(score: number) {
     this.updateDataService.updateJatekosPontszam(this.userdataService.loginData.jatekos_id.toString(), score)
       .then((response) => {
         console.log('Pontszám sikeresen frissítve!');
@@ -62,15 +63,15 @@ export class PlaygorundComponent implements OnInit {
         console.log('Hiba történt a pontszám frissítése során:', error);
       });
   }
-  
-  
-  
+
+
+
 
 
 
   stopTimer() {
     clearInterval(this.interval);
-    this.snackbarService.show(['Sajnos lejárt az időd.'])
+    
     setTimeout(() => {
       this.router.navigate(['/home'], { queryParams: {} });
     }, 1500);
@@ -93,36 +94,37 @@ export class PlaygorundComponent implements OnInit {
   choose(id: number) {
     console.log(id);
     for (let a of this.answers) {
-      if(a[0] === id && a[3] === 1){
+      if (a[0] === id && a[3] === 1) {
         this.userPontszam += 10;
         this.userdataService.loginData.pontszam += 10;
         this.scoreUP(this.userPontszam);
         this.snackbarService.show(['Helyes válasz!']);
+        this.stopTimer();
         setTimeout(() => {
           this.router.navigate(['/game']);
         }, 1500);
-      } else{
+      } else {
         this.snackbarService.show(['WRONG']);
       }
-    } 
+    }
 
   }
 
-   getCurrentQuestionAndAnswers(){
-    for(let q of this.questions){
-      if(q[0] === this.currentQuestionId){
+  getCurrentQuestionAndAnswers() {
+    for (let q of this.questions) {
+      if (q[0] === this.currentQuestionId) {
         this.currentQuestion = q[2];
       }
     }
 
-    for(let a of this.answers){
-      if(a[1] === this.currentQuestionId){
+    for (let a of this.answers) {
+      if (a[1] === this.currentQuestionId) {
         this.currentAnswers.push([a[0], a[2]]);
-        
+
       }
     }
 
-    console.log("jelenlegi kérdés: " , this.currentQuestion);
-    console.log("jelenlegi válaszok: " , this.currentAnswers);
+    console.log("jelenlegi kérdés: ", this.currentQuestion);
+    console.log("jelenlegi válaszok: ", this.currentAnswers);
   }
 }
