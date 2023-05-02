@@ -16,6 +16,12 @@ export class UpdateDataService {
     return this.http.put(`http://localhost:3000/jatekos/${jatekos_id}`, {nev, felhasznalonev, email, jelszo, szuletesi_datum}).toPromise();
   }
 
+  updateJatekosPontszam(jatekos_id: string, pontszam: number): Promise<any> {
+    return this.http.put(`http://localhost:3000/jatekos/${jatekos_id}/pontszam`, { pontszam: pontszam }).toPromise();
+  }
+  
+  
+
   updateVerseny(versenyId: string, jatekos_id: string, nev: string, leiras: string, nyitasDatuma: string, engedelyezve: string, allapot: string) {
     return this.http.put(`http://localhost:3000/verseny/${versenyId}`, { jatekos_id, nev, leiras, nyitasDatuma, engedelyezve, allapot }).toPromise();
   }

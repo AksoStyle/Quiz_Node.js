@@ -8,8 +8,8 @@ export class RegisterService {
 
   constructor(private http: HttpClient) { }
 
-  register(nev: string, felhasznalonev: string, email: string, jelszo: string, szuletesiDatum: string) {
-    const body = { nev, felhasznalonev, email, jelszo, szuletesiDatum };
+  register(nev: string, felhasznalonev: string, email: string, jelszo: string, szuletesiDatum: string, pontszam: number) {
+    const body = { nev, felhasznalonev, email, jelszo, szuletesiDatum, pontszam };
     return this.http.post('http://localhost:3000/register', body);
   }
 }

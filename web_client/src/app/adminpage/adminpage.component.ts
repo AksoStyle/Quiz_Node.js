@@ -119,7 +119,8 @@ export class AdminpageComponent {
         nysd
       )
       .subscribe(res =>{
-
+        this.snackbarService.show(['Hozzaszolas sikeresen felvéve!']);
+        console.log('adminpage.component.ts res: ', res, ' adatok: ', hozzaszolasData);
       },
       error => {
         this.snackbarService.show(['Hiba lépett fel a felvitel közben.']);

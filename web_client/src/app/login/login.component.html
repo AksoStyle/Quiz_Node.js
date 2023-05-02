@@ -1,13 +1,18 @@
 <div class="main_component">
-    <h1>Játék elkezdéséhez jelentkezz be!</h1>
-    <mat-form-field>
-        <mat-label for="email">Email: </mat-label><input matInput type="text" [formControl]="email" />
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label for="password">Password: </mat-label><input matInput type="password" [formControl]="password" />
-    </mat-form-field>
-    <span>
-        <span><button mat-raised-button color="primary" (click)="login()">Login</button></span>
-        <span><button mat-raised-button color="primary"  routerLink="/register">Sign Up</button></span>
-    </span>
-</div>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <h1>Játék elkezdéséhez jelentkezz be!</h1>
+      <mat-form-field>
+        <mat-label for="felhasznalonev">Username:</mat-label>
+        <input matInput type="text" formControlName="felhasznalonev" id="felhasznalonev" name="felhasznalonev" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label for="jelszo">Password:</mat-label>
+        <input matInput type="password" formControlName="jelszo" id="jelszo" name="jelszo" />
+      </mat-form-field>
+      <span>
+        <button mat-raised-button color="primary" type="submit">Login</button>
+        <button mat-raised-button color="primary" routerLink="/register">Sign Up</button>
+      </span>
+    </form>
+  </div>
+  

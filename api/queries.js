@@ -1,7 +1,21 @@
 
+// BEJELENTKEZÉS 
+const getLoggedIn = (connection, felhasznalonev, jelszo) => {
+  return new Promise((resolve, reject) => {
+    connection.execute('SELECT * FROM Jatekos WHERE felhasznalonev = :felhasznalonev AND jelszo = :jelszo',
+      [felhasznalonev, jelszo],
+      (err, result) => {
+        if (err) {
+          console.log("Hiba történt a bejelentkezés során. Hiba: ", err.message);
+          reject(err);
+        }
+        resolve(result);
+      })
+  })
+}
+
 
 //TÉMA NEVEK LEKÉRÉSE
-
 const getTemakorNevek = (connection) => {
   return new Promise((resolve, reject) => {
     connection.execute("SELECT nev FROM temakor", (err, result) => {
@@ -93,12 +107,13 @@ const insertJatekosData = (
   felhasznalonev,
   email,
   jelszo,
-  szuletesiDatum
+  szuletesiDatum,
+  pontszam,
 ) => {
   return new Promise((resolve, reject) => {
     const jatekosId = Math.floor(Math.random() * 50) + 1;
     const sql =
-      "INSERT INTO JATEKOS(JATEKOS_ID, NEV, FELHASZNALONEV, EMAIL, JELSZO, SZULETESI_DATUM) VALUES (:jatekosId, :nev, :felhasznalonev, :email, :jelszo, :szuletesiDatum)";
+      "INSERT INTO JATEKOS(JATEKOS_ID, NEV, FELHASZNALONEV, EMAIL, JELSZO, SZULETESI_DATUM, PONTSZAM) VALUES (:jatekosId, :nev, :felhasznalonev, :email, :jelszo, :szuletesiDatum, :pontszam)";
     const binds = {
       jatekosId: jatekosId,
       nev: nev,
@@ -106,6 +121,7 @@ const insertJatekosData = (
       email: email,
       jelszo: jelszo,
       szuletesiDatum: szuletesiDatum,
+      pontszam: pontszam,
     };
     connection.execute(sql, binds, (err, result) => {
       if (err) {
@@ -157,6 +173,38 @@ const updateJatekos = (connection, jatekos_id, nev ,felhasznalonev, email, jelsz
     );
   });
 };
+
+// UPDATE JATEKOS PONTSZAM 
+const updateJatekosPontszam = (connection, jatekos_id, pontszam) => {
+  return new Promise((resolve, reject) => {
+    const sql = "UPDATE JATEKOS SET pontszam = :pontszam WHERE jatekos_id = :jatekos_id";
+    const binds = {
+      jatekos_id: jatekos_id,
+      pontszam: pontszam
+    };
+
+    connection.execute(
+      sql,
+      binds,
+      (err, result) => {
+        if (err) {
+          console.log("Hiba történt az update folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+          reject(err);
+        } else {
+          connection.commit((err) => {
+            if (err) {
+              console.log("Hiba történt a commit folyamán. Hiba: ", err , ", Hiba üzenet: " , err.message);
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        }
+      }
+    );
+  });
+};
+
 
 // Minden verseny lekérdezése, frissítése, törlése
 
@@ -975,6 +1023,10 @@ const updateValasz = (connection, valasz_id, kerdes_id, szoveg, helyesseg) => {
   });
 };
 
+
+
+
+
 module.exports = {
   getAdminData,
   updateAdmin,
@@ -982,6 +1034,7 @@ module.exports = {
   getJatekosData,
   insertJatekosData,
   updateJatekos,
+  updateJatekosPontszam,
   //verseny
   getVersenyData,
   insertNewVerseny,
@@ -1020,5 +1073,8 @@ module.exports = {
 
   //temakornevek
   getTemakorNevek,
+
+  //LOGIN
+  getLoggedIn,
   
 };

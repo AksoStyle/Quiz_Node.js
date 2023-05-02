@@ -79,7 +79,7 @@ export class RegisterComponent {
           userData.felhasznalonev,
           userData.email,
           userData.jelszo,
-          formattedDate)
+          formattedDate, 0)
             .subscribe(res => {
             this.snackbar.show(['Siekres regisztráció!'])
             console.log(res);

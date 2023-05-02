@@ -35,7 +35,7 @@ import { MatTableModule } from '@angular/material/table';
 import { GameComponent } from './game/game.component';
 import { PlaygorundComponent } from './playgorund/playgorund.component';
 
-
+import { AuthService } from './authguard/authservice.service';
 
 @NgModule({
   imports: [
@@ -47,6 +47,7 @@ import { PlaygorundComponent } from './playgorund/playgorund.component';
   
     
   ],
+  providers: [AuthService],
   // ...
 })
 export class NavbarModule { }
@@ -97,7 +98,8 @@ export class NavbarModule { }
 
   ],
   providers: [
-    DataService
+    DataService, 
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

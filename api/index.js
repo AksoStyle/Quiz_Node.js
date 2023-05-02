@@ -4,6 +4,8 @@ const queries = require("./queries.js");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const session = require('express-session');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 
@@ -13,6 +15,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: "http://localhost:4200",
+  })
+);
+
+app.use(
+  session({
+    secret: "my-secret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false},
   })
 );
 
@@ -47,12 +58,65 @@ async function get_data() {
   };
 }
 
+// --------------- LOGIN ----------------------------------------------------------------
+app.post("/login", async (req, res) => {
+  const { felhasznalonev, jelszo } = req.body;
+  console.log("index.js /login req.body: ", req.body);
+  try {
+    connection = await databaseConn.connection_start();
+    const result = await queries.getLoggedIn(connection, felhasznalonev, jelszo);
+    if (result.rows.length > 0) {
+      // Save the user's ID, name, and game ID in the session
+      console.log("session result: " , result.rows)
+      req.session.jatekos_id = result.rows[0][0];
+      req.session.nev = result.rows[0][1];
+      req.session.felhasznalonev = result.rows[0][2];
+      req.session.email = result.rows[0][3];
+      req.session.pontszam = result.rows[0][6];
+      
+
+      const token = Math.random().toString(36).slice(2);
+      req.session.token = token;
+      res.json({ success: true, token: token, jatekos_id: req.session.jatekos_id, nev: req.session.nev,  felhasznalonev: req.session.felhasznalonev, email: req.session.email , pontszam: req.session.pontszam});
+    } else {
+      res.json({ success: false });
+    }
+    await connection.close();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+// ----------- AUTHENTIACTION --------------------------------
+const requireAuth = (req, res, next) => {
+  const userId = req.session.userId;
+  const token = req.session.token;
+
+  // If the user is authenticated and the token matches, continue with the next middleware
+  if (userId && token && token === req.headers.authorization) {
+    // If the user is authenticated, store the user's ID and game ID in the request object
+    req.userId = userId;
+    req.gameId = req.session.gameId;
+    return next();
+  } else {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+};
+
+
+app.get("/protected", requireAuth, (req, res) => {
+  res.send("This is a protected route!");
+});
+
 // ---- INSERT START ----
 
 // ---- JATEKOS INSERT START ----
 
 app.post("/register", async (req, res) => {
-  const { nev, felhasznalonev, email, jelszo, szuletesiDatum } = req.body;
+  const { nev, felhasznalonev, email, jelszo, szuletesiDatum, pontszam } =
+    req.body;
   let connection;
   try {
     connection = await databaseConn.connection_start();
@@ -62,7 +126,8 @@ app.post("/register", async (req, res) => {
       felhasznalonev,
       email,
       jelszo,
-      szuletesiDatum
+      szuletesiDatum,
+      pontszam
     );
     res.json({ success: true, result: result.rowsAffected });
   } catch (err) {
@@ -305,7 +370,10 @@ app.delete("/hozzaszolas/:id", async (req, res) => {
   const hozzaszolasId = req.params.id;
   try {
     const connection = await databaseConn.connection_start();
-    const result = await queries.deleteHozzaszolasData(connection,hozzaszolasId);
+    const result = await queries.deleteHozzaszolasData(
+      connection,
+      hozzaszolasId
+    );
     res.json(result);
   } catch (err) {
     res.status(500).json({ error: "Hiba történt a törlés során. Hiba: ", err });
@@ -447,6 +515,30 @@ app.put("/jatekos/:jatekos_id", async (req, res) => {
   }
 });
 
+app.put("/jatekos/:jatekos_id/pontszam", async (req, res) => {
+  const jatekos_id = parseInt(req.params.jatekos_id);
+
+  const { pontszam } = req.body;
+
+  try {
+    connection = await databaseConn.connection_start();
+    const result = await queries.updateJatekosPontszam(
+      connection,
+      jatekos_id,
+      pontszam
+    );
+    res.json(result);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ error: "Hiba történt az update során. Hiba: ", err });
+  } finally {
+    if (connection) {
+      await databaseConn.connection_close(connection);
+    }
+  }
+});
+
 //VERSENY
 app.put("/verseny/:id", async (req, res) => {
   const versenyId = req.params.id;
@@ -502,7 +594,7 @@ app.put("/hozzaszolas/:id", async (req, res) => {
   const hozzaszolas_id = req.params.id;
   const { jatekos_id, forum_id, szoveg, datum } = req.body;
   try {
-     connection = await databaseConn.connection_start();
+    connection = await databaseConn.connection_start();
     const result = await queries.updateHozzaszolas(
       connection,
       hozzaszolas_id,
@@ -527,8 +619,8 @@ app.put("/hozzaszolas/:id", async (req, res) => {
 app.put("/temakor/:id", async (req, res) => {
   const temakor_id = req.params.id;
   const { forum_id, nev } = req.body;
-  console.log('index.js req.body =>', req.body);
-  console.log('temakor id:', temakor_id);
+  console.log("index.js req.body =>", req.body);
+  console.log("temakor id:", temakor_id);
   try {
     connection = await databaseConn.connection_start();
     const result = await queries.updateTemakor(
