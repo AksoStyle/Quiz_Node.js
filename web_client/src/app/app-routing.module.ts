@@ -11,6 +11,7 @@ import { AdminpageComponent } from './adminpage/adminpage.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { GameComponent } from './game/game.component';
 import { PlaygorundComponent } from './playgorund/playgorund.component';
+import { ForumComponent } from './forum/forum.component';
 
 import { AuthService } from './authguard/authservice.service';
 import { AuthGuard } from './authguard/auth-guard.guard';
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'navbar', component: NavbarComponent },
   { path: 'game', component: GameComponent , canActivate: [AuthGuard]},
   { path: 'playground', component: PlaygorundComponent , canActivate: [AuthGuard]},
+  { path: 'forum', component: ForumComponent}
   
 ];
 

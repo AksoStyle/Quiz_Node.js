@@ -36,6 +36,7 @@ import { GameComponent } from './game/game.component';
 import { PlaygorundComponent } from './playgorund/playgorund.component';
 
 import { AuthService } from './authguard/authservice.service';
+import { ForumComponent } from './forum/forum.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,8 @@ import { AuthService } from './authguard/authservice.service';
     MatSidenavModule
   ],
   declarations: [
+    
+  
     
   
     
@@ -64,7 +67,8 @@ export class NavbarModule { }
     RegisterComponent,
     NavbarComponent,
     GameComponent,
-    PlaygorundComponent
+    PlaygorundComponent,
+    ForumComponent
 
 
 

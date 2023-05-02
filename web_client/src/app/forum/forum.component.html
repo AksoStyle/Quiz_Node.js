@@ -1,0 +1,40 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Elérhető fórumok:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngFor="let forum of forumok; let i = index">
+        <div class="forumok">
+            <mat-label>{{forum[0]}} - </mat-label>
+            
+            <mat-label>{{ forum[1]}}</mat-label>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Hozzászólások</mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngFor="let sc of sortedComments;">
+        <div>
+            <mat-label>{{sc[0]}} - </mat-label>
+            <mat-label>{{sc[2]}}</mat-label>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Kommentelés</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="hozzaszolasUpForm" (ngSubmit)="HozzaszolasUP()">
+            <mat-form-field appearance="fill">
+              <mat-label>Hozzászólás:</mat-label>
+              <textarea  matInput type="text" name="hozzaszolas" formControlName="hozzaszolas"></textarea>
+
+            </mat-form-field>
+            <button mat-raised-button type="submit">Kommentelés</button>
+      </form>
+    </mat-card-content>
+</mat-card>

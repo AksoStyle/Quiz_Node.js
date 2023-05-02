@@ -119,7 +119,7 @@ export class AdminpageComponent {
         nysd
       )
       .subscribe(res =>{
-        this.snackbarService.show(['Hozzaszolas sikeresen felvéve!']);
+        this.snackbarService.show(['Temakor sikeresen felvéve!']);
         console.log('adminpage.component.ts res: ', res, ' adatok: ', hozzaszolasData);
       },
       error => {
@@ -198,7 +198,8 @@ export class AdminpageComponent {
         nysd
       )
       .subscribe(res =>{
-
+        this.snackbarService.show(['Temakor sikeresen felvéve!']);
+        console.log(res);
       },
       error => {
         this.snackbarService.show(['Hiba lépett fel a felvitel közben.']);

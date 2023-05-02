@@ -463,11 +463,11 @@ const insertNewHozzaszolas = (
   datum,
 ) => {
   return new Promise((resolve, reject) => {
-    const hozzaszolasId = Math.floor(Math.random() * 50) + 1;
+    const hozzaszolas_id = Math.floor(Math.random() * 50) + 1;
     const sql = "INSERT INTO HOZZASZOLAS (HOZZASZOLAS_ID, JATEKOS_ID, FORUM_ID, SZOVEG, DATUM) VALUES (:hozzaszolas_id, :jatekos_id, :forum_id, :szoveg, :datum)";
   
     const binds = {
-      hozzaszolas_id: hozzaszolasId,
+      hozzaszolas_id: hozzaszolas_id,
       jatekos_id: jatekos_id,
       forum_id: forum_id,
       szoveg: szoveg,

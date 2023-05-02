@@ -20,8 +20,8 @@ export class InsertDataService {
     return this.http.post('http://localhost:3000/forum', body);
   }
 
-  insertNewHozzaszolas(jatekosId: number, forumId: string, szoveg: string, Datum: string) {
-    const body = { jatekosId, forumId, szoveg, Datum};
+  insertNewHozzaszolas(jatekos_id: number, forum_id: string, szoveg: string, datum: string) {
+    const body = { jatekos_id, forum_id, szoveg, datum};
     console.log('insert-data.service.js: ' , body);
     return this.http.post('http://localhost:3000/hozzaszolas', body);
   }
